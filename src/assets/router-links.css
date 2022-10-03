@@ -1,0 +1,10 @@
+.router-link {
+    color: var(--color-gray);
+    text-decoration: none;
+    transition: color 500ms;
+}
+
+.router-link-active,
+.router-link-exact-active {
+    color: var(--color-green) !important;
+}
