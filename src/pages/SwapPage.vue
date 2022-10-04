@@ -1,6 +1,14 @@
 <script setup>
+import { useSwapStore } from '../stores/swap.js';
+
 import { reactive } from 'vue';
+
 import NftCard from '../components/swap/NftCard.vue';
+import PopupComponent from '../components/PopupComponent.vue';
+import PopupLeft from '../components/swap/popup/PopupLeft.vue';
+import PopupRight from '../components/swap/popup/PopupRight.vue';
+
+const swapStore = useSwapStore();
 
 const items = reactive([
     {
@@ -59,6 +67,13 @@ const items = reactive([
         collection: "Abstract world"
     },
 ]);
+
+function closePopup() {
+    swapStore.$patch({
+        showPopup: false,
+        selectedItem: {}
+    })
+}
 </script>
 
 <template>
@@ -72,6 +87,14 @@ const items = reactive([
                 :item="item"
             ></NftCard>
         </div>
+        <popup-component :popup-show="swapStore.showPopup">
+            <img @click="closePopup" class="close-popup" src="/img/svg/close.svg" alt="">
+            <div class="flex-row sides">
+                <PopupLeft />
+                <img src="/img/svg/divider.svg" alt="">
+                <PopupRight />
+            </div>
+        </popup-component>
     </div>
 </template>
 
@@ -83,4 +106,21 @@ const items = reactive([
     flex-wrap: wrap;
     gap: 1.5rem;
 }
+.close-popup {
+    position: absolute;
+    top: .7rem;
+    right: .7rem;
+    cursor: pointer;
+}
+.sides {
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+.sides > img {
+    display: inline-flexbox;
+    height: 100vh;
+}
+
 </style>

@@ -1,11 +1,11 @@
 <script setup>
-import ConnectButton from './right-side/ConnectButton.vue';
+import ConnectButton from '@/components/ConnectButton.vue';
 
 </script>
 
 <template>
     <div class="app-header__child">
-        <ConnectButton />
+        <connect-button>Connect your wallet</connect-button>
     </div>
 </template>
 

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <button class="connection-btn">Connect your wallet</button>
+    <button class="connection-btn"><slot></slot></button>
 </template>
 
 <style>
