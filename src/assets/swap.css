@@ -1,3 +1,24 @@
 .swap-header {
     font-size: 50px;
 }
+.image-container {
+    max-width: 250px;
+    max-height: 250px;
+    position: relative;
+}
+.image-container > img {
+    border: 2px solid #FFF;
+    border-radius: 14px;
+
+    max-width: 250px;
+    max-height: 250px;
+    width: auto;
+    height: auto;
+}
+.item-name {
+    font-size: 14px;
+}
+.item-collection {
+    font-size: 10px;
+    color: var(--color-gray);
+}

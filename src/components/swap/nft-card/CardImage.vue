@@ -13,20 +13,6 @@ const props = defineProps(['img', 'collection', 'name']);
 </template>
 
 <style scoped>
-.image-container {
-    max-width: 250px;
-    max-height: 250px;
-    position: relative;
-}
-.image-container > img {
-    border: 2px solid #FFF;
-    border-radius: 14px;
-
-    max-width: 250px;
-    max-height: 250px;
-    width: auto;
-    height: auto;
-}
 .info-container {
     position: absolute;
     bottom: .7rem;
@@ -37,12 +23,5 @@ const props = defineProps(['img', 'collection', 'name']);
     height: 1.5rem;
     width: 60%;
     border-radius: 4px;
-}
-.item-name {
-    font-size: 14px;
-}
-.item-collection {
-    font-size: 10px;
-    color: var(--color-gray);
 }
 </style>
