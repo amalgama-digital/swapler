@@ -54,7 +54,7 @@ watch(
   position: relative;
 
   height: 90vh;
-  width: 75vw;
+  width: 90vw;
 
   background-color: #242424;
   border-radius: 20px;
