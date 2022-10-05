@@ -91,8 +91,8 @@ function closePopup() {
             <img @click="closePopup" class="close-popup" src="/img/svg/close.svg" alt="">
             <div class="flex-row sides">
                 <PopupLeft />
-                <img src="/img/svg/divider.svg" alt="">
-                <PopupRight />
+                <div class="divider"></div>
+                <popup-right :item="swapStore.selectedItem"></popup-right>
             </div>
         </popup-component>
     </div>
@@ -117,10 +117,13 @@ function closePopup() {
     align-items: center;
 
     width: 100%;
+    height: 100%;
 }
-.sides > img {
-    display: inline-flexbox;
-    height: 100vh;
+.divider {
+    height: 85vh;
+    width: .1rem;
+
+    background-color: var(--color-text);
 }
 
 </style>
