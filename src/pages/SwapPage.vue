@@ -120,7 +120,8 @@ function closePopup() {
     height: 100%;
 }
 .divider {
-    height: 85vh;
+    min-height: 10rem;
+    height: 95%;
     width: .1rem;
 
     background-color: var(--color-text);

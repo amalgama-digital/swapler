@@ -32,7 +32,7 @@ const props = defineProps(['item']);
                 </ul>
             </div>
             <div class="flex-row offer-btn-container">
-                <basic-button>Send an offer</basic-button>
+                <basic-button :disabled="true">Send an offer</basic-button>
             </div>
         </div>
     </div>

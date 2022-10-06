@@ -34,7 +34,7 @@ function setComponent(v) {
                 v-if="!walletConnectedMock"
             >Connect your wallet first</connect-button>
             <div
-                class="w-100"
+                class="flex-column flex-center w-100 h-100"
                 v-else
             >
                 <component @additem="setComponent" :is="tabs[selectedComponent]"></component>
@@ -54,6 +54,6 @@ function setComponent(v) {
 }
 .left-container {
     justify-content: space-evenly;
-    height: 80%;
+    height: 85%;
 }
 </style>
