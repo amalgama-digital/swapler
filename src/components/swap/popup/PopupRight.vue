@@ -17,6 +17,12 @@ const props = defineProps(['item']);
                         <span class="item-name">{{ props.item.name }}</span>
                         <span class="item-collection">{{ props.item.collection }}</span>
                     </div>
+                    <div class="flex-row social-media">
+                        <a href="#"><img src="/img/social/web_icon.svg" alt=""></a>
+                        <a href="#"><img src="/img/social/twitter_icon.svg" alt=""></a>
+                        <a href="#"><img src="/img/social/telegram_icon.svg" alt=""></a>
+                        <a href="#"><img src="/img/social/reddit_icon.svg" alt=""></a>
+                    </div>
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">{{ props.item.cost }} <img src="/img/svg/rectangle.svg" alt=""></span>
@@ -76,6 +82,9 @@ ul li {
 .item-collection {
     font-size: 18px;
     color: var(--color-gray);
+}
+.social-media {
+    gap: .5rem;
 }
 .cost-container {
     gap: .4rem;
