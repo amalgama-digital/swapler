@@ -21,7 +21,8 @@ const props = defineProps(['img', 'collection', 'name']);
     gap: .6rem;
     backdrop-filter: blur(5px);
     height: 1.5rem;
-    width: 60%;
+    width: fit-content;
+    max-width: 80%;
     border-radius: 4px;
 }
 </style>

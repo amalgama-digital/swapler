@@ -3,13 +3,14 @@ import { ref } from 'vue';
 
 import ConnectButton from '../../ConnectButton.vue';
 import TokenButtons from './popup-left/TokenButtons.vue';
+import UserNft from './popup-left/UserNft.vue';
 import UserTokens from './popup-left/UserTokens.vue'
 
 const walletConnectedMock = ref(false);
 
 const tabs = {
     'main': TokenButtons,
-    'nft': UserTokens,
+    'nft': UserNft,
     'tok': UserTokens
 };
 const selectedComponent = ref('main');
@@ -37,7 +38,7 @@ function setComponent(v) {
                 class="flex-column flex-center w-100 h-100"
                 v-else
             >
-                <component @additem="setComponent" :is="tabs[selectedComponent]"></component>
+                <component @setComponent="setComponent" :is="tabs[selectedComponent]"></component>
             </div>
         </div>
     </div>

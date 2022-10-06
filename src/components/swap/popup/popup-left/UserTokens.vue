@@ -1,9 +1,7 @@
 <script setup>
-import { onMounted } from 'vue';
+import BasicButton from '../../../BasicButton.vue';
 
-import BasicButton from '../../../BasicButton.vue'
-
-const emit = defineEmits(['additem']);
+const emit = defineEmits(['setComponent']);
 </script>
 
 <template>
@@ -23,7 +21,7 @@ const emit = defineEmits(['additem']);
             </div>
         </div>
         <div class="flex-row btn-container">
-            <button class="cancel-btn" @click="emit('additem', 'main')">Cancel</button>
+            <button class="cancel-btn" @click="emit('setComponent', 'main')">Cancel</button>
             <basic-button>Add to offer</basic-button>
         </div>
     </div>

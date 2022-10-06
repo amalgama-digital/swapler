@@ -16,55 +16,55 @@ const items = reactive([
         cost: 1,
         offers: 1,
         img: "http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg",
-        name: "Abstract",
-        collection: "Abstract world"
+        name: "Abstract #1",
+        collection: "Abstraction world"
     },
     {
         cost: 2,
         offers: 3,
         img: "http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg",
-        name: "Abstract",
-        collection: "Abstract world"
+        name: "Abstract #3",
+        collection: "Abstraction world"
     },
     {
         n: 3,
         cost: 4,
         offers: 5,
         img: "http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg",
-        name: "Abstract",
-        collection: "Abstract world"
+        name: "Abstract #4",
+        collection: "Abstraction world"
     },
     {
         n: 4,
         cost: 1,
         offers: 7,
         img: "http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg",
-        name: "Abstract",
-        collection: "Abstract world"
+        name: "Abstract #14",
+        collection: "Abstraction world"
     },
     {
         n: 5,
         cost: 3,
         offers: 3,
         img: "http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg",
-        name: "Abstract",
-        collection: "Abstract world"
+        name: "Abstract #21",
+        collection: "Abstraction world"
     },
     {
         n: 6,
         cost: 2,
         offers: 1,
         img: "http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg",
-        name: "Abstract",
-        collection: "Abstract world"
+        name: "Abstract #15",
+        collection: "Abstraction world"
     },
     {
         n: 7,
         cost: 1,
         offers: 2,
         img: "http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg",
-        name: "Abstract",
-        collection: "Abstract world"
+        name: "Abstract #7",
+        collection: "Abstraction world"
     },
 ]);
 
