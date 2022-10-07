@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, unref } from 'vue';
+import { useSwapStore } from '../../../../stores/swap';
 
 import BasicButton from '../../../BasicButton.vue';
 
 const emit = defineEmits(['setComponent']);
-
+const swapStore = useSwapStore();
 const selectedToken = ref(undefined);
 
 const mockNFTs = reactive([
@@ -110,7 +111,7 @@ function selectToken(nft) {
     selectedToken.value = nft;
 }
 function addToOffer() {
-    // TODO: set offer in the store
+    swapStore.nftToSwap.push(selectedToken.value);
     emit('setComponent', 'offer');
 }
 </script>

@@ -1,7 +1,9 @@
 <script setup>
 import { reactive, readonly } from 'vue';
+import { useRouter } from 'vue-router';
 import LinkButton from './LinkButton.vue';
 
+const router = useRouter();
 const buttons = readonly(reactive([
     {
         n: 1,
@@ -23,6 +25,13 @@ const buttons = readonly(reactive([
     }
 ]));
 
+function goTo(lnk) {
+    try {
+        router.push({ name: lnk });
+    } catch (error) {
+        console.error(error);
+    }
+}
 </script>
 
 <template>
@@ -30,6 +39,7 @@ const buttons = readonly(reactive([
         <link-button
             v-for="btn in buttons"
             :key="btn.n"
+            @click="goTo(btn.label.toLowerCase())"
         >
             <template v-slot:image>
                 <img :src="btn.img" alt="">

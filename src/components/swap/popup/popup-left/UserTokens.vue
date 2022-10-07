@@ -1,10 +1,11 @@
 <script setup>
+import { useSwapStore } from '../../../../stores/swap';
 import BasicButton from '../../../BasicButton.vue';
 
 const emit = defineEmits(['setComponent']);
+const swapStore = useSwapStore();
 
-function addToOffer() {
-    // TODO: set offer in the store
+function goToOffer() {
     emit('setComponent', 'offer');
 }
 </script>
@@ -22,12 +23,15 @@ function addToOffer() {
             <div class="flex-row input-container">
                 <span>waves</span>
                 <span class="divider"></span>
-                <input type="text" placeholder="Enter the amount">
+                <input v-model="swapStore.tokensToSwap" type="text" placeholder="Enter the amount">
             </div>
         </div>
         <div class="flex-row btn-container">
             <button class="cancel-btn" @click="emit('setComponent', 'main')">Cancel</button>
-            <basic-button @click="addToOffer">Add to offer</basic-button>
+            <basic-button
+                :disabled="swapStore.tokensToSwap > 0 ? false : true"
+                @click="goToOffer"
+            >Add to offer</basic-button>
         </div>
     </div>
 </template>

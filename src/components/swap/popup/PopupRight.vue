@@ -1,7 +1,15 @@
 <script setup>
+import { computed } from '@vue/reactivity';
+import { useSwapStore } from '../../../stores/swap';
 import BasicButton from '../../BasicButton.vue';
+
 const props = defineProps(['item']);
 
+const swapStore = useSwapStore();
+
+const offering = computed(() => {
+    return swapStore.tokensToSwap || swapStore.nftToSwap.length;
+});
 </script>
 
 <template>
@@ -38,7 +46,7 @@ const props = defineProps(['item']);
                 </ul>
             </div>
             <div class="flex-row offer-btn-container">
-                <basic-button :disabled="true">Send an offer</basic-button>
+                <basic-button :disabled="!offering">Send an offer</basic-button>
             </div>
         </div>
     </div>
