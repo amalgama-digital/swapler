@@ -2,6 +2,11 @@
 import BasicButton from '../../../BasicButton.vue';
 
 const emit = defineEmits(['setComponent']);
+
+function addToOffer() {
+    // TODO: set offer in the store
+    emit('setComponent', 'offer');
+}
 </script>
 
 <template>
@@ -22,7 +27,7 @@ const emit = defineEmits(['setComponent']);
         </div>
         <div class="flex-row btn-container">
             <button class="cancel-btn" @click="emit('setComponent', 'main')">Cancel</button>
-            <basic-button>Add to offer</basic-button>
+            <basic-button @click="addToOffer">Add to offer</basic-button>
         </div>
     </div>
 </template>

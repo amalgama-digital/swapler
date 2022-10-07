@@ -4,14 +4,16 @@ import { ref } from 'vue';
 import ConnectButton from '../../ConnectButton.vue';
 import TokenButtons from './popup-left/TokenButtons.vue';
 import UserNft from './popup-left/UserNft.vue';
-import UserTokens from './popup-left/UserTokens.vue'
+import UserTokens from './popup-left/UserTokens.vue';
+import OfferComponent from './popup-left/OfferComponent.vue';
 
 const walletConnectedMock = ref(false);
 
 const tabs = {
     'main': TokenButtons,
     'nft': UserNft,
-    'tok': UserTokens
+    'tok': UserTokens,
+    'offer': OfferComponent
 };
 const selectedComponent = ref('main');
 
@@ -38,7 +40,7 @@ function setComponent(v) {
                 class="flex-column flex-center w-100 h-100"
                 v-else
             >
-                <component @setComponent="setComponent" :is="tabs[selectedComponent]"></component>
+                <component @set-component="setComponent" :is="tabs[selectedComponent]"></component>
             </div>
         </div>
     </div>
@@ -55,6 +57,6 @@ function setComponent(v) {
 }
 .left-container {
     justify-content: space-evenly;
-    height: 85%;
+    height: 80%;
 }
 </style>

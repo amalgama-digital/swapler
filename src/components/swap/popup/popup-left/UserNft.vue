@@ -109,6 +109,10 @@ const mockNFTs = reactive([
 function selectToken(nft) {
     selectedToken.value = nft;
 }
+function addToOffer() {
+    // TODO: set offer in the store
+    emit('setComponent', 'offer');
+}
 </script>
 
 <template>
@@ -127,12 +131,12 @@ function selectToken(nft) {
                     </div>
                 </div>
             </div>
-            <div v-if="selectedToken" class="flex-row selected-info">
+            <div v-if="selectedToken" class="flex-row gap-07">
                 <div class="image-container">
                     <img :src="selectedToken.img" alt="">
                 </div>
-                <div class="flex-column item-info">
-                    <div class="flex-column info-container">
+                <div class="flex-column flex-space-between">
+                    <div class="flex-column gap-05">
                         <span class="item-name">{{ selectedToken.name }}</span>
                         <span class="item-collection">{{ selectedToken.collection }}</span>
                     </div>
@@ -145,7 +149,10 @@ function selectToken(nft) {
         </div>
         <div class="flex-row btn-container">
             <button class="cancel-btn" @click="emit('setComponent', 'main')">Cancel</button>
-            <basic-button :disabled="selectedToken ? false: true">Add to offer</basic-button>
+            <basic-button
+                :disabled="selectedToken ? false: true"
+                @click="addToOffer"
+            >Add to offer</basic-button>
         </div>
     </div>
 </template>
@@ -196,12 +203,6 @@ function selectToken(nft) {
 }
 .item-collection {
     font-size: 18px;
-}
-.item-info {
-    justify-content: space-between;
-}
-.info-container {
-    gap: .5rem;
 }
 .cost-container {
     gap: .3rem;

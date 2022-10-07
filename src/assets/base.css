@@ -44,6 +44,22 @@ button {
   align-items: center;
 }
 
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.flex-start {
+  justify-content: start;
+}
+
+.gap-05 {
+  gap: .5rem;
+}
+
+.gap-07 {
+  gap: .7rem;
+}
+
 .font-comfortaa-700 {
   font-family: 'Comfortaa';
   font-weight: 700;

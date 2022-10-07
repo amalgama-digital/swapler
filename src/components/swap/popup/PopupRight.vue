@@ -63,12 +63,12 @@ ul li {
 .popup-right {
     width: 49%;
     height: 100%;
-    margin-left: .6rem;
+    margin-left: 1rem;
     justify-content: space-evenly;
 }
 .right-container {
     justify-content: space-between;
-    height: 85%;
+    height: 80%;
 }
 .info-container {
     gap: 1rem;
