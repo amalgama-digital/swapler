@@ -6,19 +6,16 @@ import LinkButton from './LinkButton.vue';
 const router = useRouter();
 const buttons = readonly(reactive([
     {
-        n: 1,
         img: "/img/svg/swap_horiz.svg",
         label: "Swap",
         description: "swap your NFT like you want"
     },
     {
-        n: 2,
         img: "/img/svg/monetization_on.svg",
         label: "Borrow",
         description: "get tokens in exchange for NFT"
     },
     {
-        n: 3,
         img: "/img/svg/local_activity.svg",
         label: "Raffle",
         description: "buy tickets and win the NFT`s"
@@ -37,8 +34,8 @@ function goTo(lnk) {
 <template>
     <div class="flex-row links-container w-80">
         <link-button
-            v-for="btn in buttons"
-            :key="btn.n"
+            v-for="btn, n in buttons"
+            :key="n"
             @click="goTo(btn.label.toLowerCase())"
         >
             <template v-slot:image>

@@ -1,13 +1,23 @@
 <script setup>
+import { onMounted, ref } from 'vue';
 import { useSwapStore } from '../../../../stores/swap';
 import BasicButton from '../../../BasicButton.vue';
 
 const emit = defineEmits(['setComponent']);
 const swapStore = useSwapStore();
+const balance = ref(0);
+const swapAmount = ref(null);
 
 function goToOffer() {
+    swapStore.tokensToSwap = swapAmount.value;
     emit('setComponent', 'offer');
 }
+
+onMounted(async () => {
+    const balanceResponse = await window.signer?.getBalance();
+    const bal = balanceResponse[0]?.amount / Math.pow(10, balanceResponse[0]?.decimals);
+    balance.value = bal;
+});
 </script>
 
 <template>
@@ -17,19 +27,19 @@ function goToOffer() {
             <table class="w-100">
                 <tr>
                     <td>waves</td>
-                    <td>999</td>
+                    <td>{{ balance }}</td>
                 </tr>
             </table>
             <div class="flex-row input-container">
                 <span>waves</span>
                 <span class="divider"></span>
-                <input v-model="swapStore.tokensToSwap" type="text" placeholder="Enter the amount">
+                <input v-model="swapAmount" type="text" placeholder="Enter the amount">
             </div>
         </div>
         <div class="flex-row btn-container">
             <button class="cancel-btn" @click="emit('setComponent', 'main')">Cancel</button>
             <basic-button
-                :disabled="swapStore.tokensToSwap > 0 ? false : true"
+                :disabled="swapAmount > 0 ? false : true"
                 @click="goToOffer"
             >Add to offer</basic-button>
         </div>

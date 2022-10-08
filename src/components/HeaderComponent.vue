@@ -5,7 +5,7 @@ import RightSide from './header/RightSide.vue';
 </script>
 
 <template>
-    <header class="flex-row app-header">
+    <header class="flex-row w-80 app-header">
         <LeftSide />
         <MiddleSide />
         <RightSide />

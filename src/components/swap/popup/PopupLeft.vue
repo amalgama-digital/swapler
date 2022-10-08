@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
+import { useMainStore } from '../../../stores/main';
+import { useSwapStore } from '../../../stores/swap';
 
 import ConnectButton from '../../ConnectButton.vue';
 import TokenButtons from './popup-left/TokenButtons.vue';
@@ -7,7 +10,8 @@ import UserNft from './popup-left/UserNft.vue';
 import UserTokens from './popup-left/UserTokens.vue';
 import OfferComponent from './popup-left/OfferComponent.vue';
 
-const walletConnectedMock = ref(false);
+const mainStore = useMainStore();
+const swapStore = useSwapStore();
 
 const tabs = {
     'main': TokenButtons,
@@ -17,10 +21,12 @@ const tabs = {
 };
 const selectedComponent = ref('main');
 
-function mockConnect() {
-    walletConnectedMock.value = true;
-    // setTimeout(() => {walletConnectedMock.value = false}, 60000);
-}
+watch(
+    () => swapStore.showPopup,
+    () => {
+        selectedComponent.value = 'main';
+    }
+);
 
 function setComponent(v) {
     selectedComponent.value = v ?? 'main';
@@ -33,8 +39,7 @@ function setComponent(v) {
         <div class="flex-column flex-center left-container">
             <connect-button
                 class="w-50"
-                @click="mockConnect"
-                v-if="!walletConnectedMock"
+                v-if="!mainStore.walletConn"
             >Connect your wallet first</connect-button>
             <div
                 class="flex-column flex-center w-100 h-100"

@@ -69,10 +69,10 @@ const items = reactive([
 ]);
 
 function closePopup() {
-    swapStore.$patch({
-        showPopup: false,
-        selectedItem: {}
-    })
+    swapStore.showPopup = false;
+    swapStore.selectedItem = {};
+    swapStore.nftToSwap = [];
+    swapStore.tokensToSwap = 0;
 }
 </script>
 

@@ -16,8 +16,8 @@
 
 <style scoped>
 .link-button {
-    --comp-max-size: 19rem;
-    --comp-min-size: 18rem;
+    --comp-max-size: 18rem;
+    --comp-min-size: 17rem;
     --comp-padding: 1rem;
     border-radius: 20px;
     border: 2px solid #fff;
