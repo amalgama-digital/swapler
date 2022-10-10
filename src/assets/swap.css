@@ -9,7 +9,7 @@
     position: relative;
 }
 .image-container > img {
-    border: 2px solid #FFF;
+    border: 2px solid #fff;
     border-radius: 14px;
 
     max-width: 250px;
