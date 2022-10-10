@@ -5,7 +5,9 @@
     "dev": "vite --host 0.0.0.0 --port 8000",
     "build": "vite build",
     "preview": "vite preview --port 8000",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "pretty-check": "prettier --check ./src/",
+    "pretty": "prettier --write ./src/"
   },
   "dependencies": {
     "@waves/provider-keeper": "^1.0.2",

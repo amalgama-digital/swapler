@@ -8,7 +8,7 @@ import "./assets/main.css";
 import router from "./router";
 
 window.signer = new Signer({
-    NODE_URL: 'https://nodes.wavesnodes.com'
+  NODE_URL: "https://nodes.wavesnodes.com",
 });
 
 const app = createApp(App);

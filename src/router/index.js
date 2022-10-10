@@ -1,24 +1,24 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 
-import MainPage from '../pages/MainPage.vue';
-import SwapPage from '../pages/SwapPage.vue';
+import MainPage from "../pages/MainPage.vue";
+import SwapPage from "../pages/SwapPage.vue";
 
 const routes = [
-    {
-        path: '/',
-        name: 'main',
-        component: MainPage
-    },
-    {
-        path: '/swap',
-        name: 'swap',
-        component: SwapPage
-    }
+  {
+    path: "/",
+    name: "main",
+    component: MainPage,
+  },
+  {
+    path: "/swap",
+    name: "swap",
+    component: SwapPage,
+  },
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
+  history: createWebHistory(),
+  routes,
 });
 
 export default router;
