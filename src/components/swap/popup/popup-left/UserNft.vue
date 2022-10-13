@@ -10,6 +10,14 @@ const selectedToken = ref(undefined);
 
 const mockNFTs = reactive([
     {
+        n: 1,
+        cost: 12,
+        offers: 128,
+        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
+        name: 'Abstract #007',
+        collection: 'Abstraction world',
+    },
+    {
         n: 2,
         cost: 3,
         offers: 3,
@@ -183,7 +191,7 @@ function addToOffer() {
 
     flex-wrap: wrap;
     gap: 0.5rem;
-    max-height: 8rem;
+    max-height: 9rem;
 }
 .nfts-container::-webkit-scrollbar {
     background-color: var(--color-dark-gray);
