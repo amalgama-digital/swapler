@@ -1,14 +1,23 @@
 <script setup>
-import { useSwapStore } from '../stores/swap.js';
-
 import { reactive } from 'vue';
+
+import { useSwapStore } from '../stores/swap.js';
 
 import NftCard from '../components/swap/NftCard.vue';
 import PopupComponent from '../components/PopupComponent.vue';
 import PopupLeft from '../components/swap/popup/PopupLeft.vue';
 import PopupRight from '../components/swap/popup/PopupRight.vue';
+import CustomSelectComponent from '../components/CustomSelectComponent.vue';
 
 const swapStore = useSwapStore();
+
+// TODO: change
+const sortBy = reactive([
+    'Name ascending',
+    'Name descending',
+    'Price: Low to high',
+    'Price: High to low'
+]);
 
 const items = reactive([
     {
@@ -74,11 +83,26 @@ function closePopup() {
     swapStore.nftsToSwap = [];
     swapStore.tokensToSwap = 0;
 }
+
+// TODO: improve
+function sort(k) {
+    console.debug(k);
+}
 </script>
 
 <template>
-    <div class="flex-column swap-container">
+    <div class="flex-column flex-center swap-container">
         <!-- ManipulationElements -->
+        <div class="flex-row flex-space-between w-80">
+            <div class="flex-row flex-center sort-container">
+                <span>Sort by:</span>
+                <custom-select-component
+                    :options="sortBy"
+                    :default="sortBy[0]"
+                    @input="sort"
+                ></custom-select-component>
+            </div>
+        </div>
         <!-- NftCards -->
         <div class="flex-row flex-center cards">
             <NftCard v-for="item in items" :key="item.n" :item="item"></NftCard>
@@ -102,6 +126,11 @@ function closePopup() {
 <style scoped>
 .swap-container {
     margin-top: 0.7rem;
+}
+.sort-container {
+    font-size: 14px;
+    font-family: 'Roboto';
+    gap: 0.5rem;
 }
 .cards {
     flex-wrap: wrap;
