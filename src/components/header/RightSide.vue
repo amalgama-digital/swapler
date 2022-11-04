@@ -1,10 +1,12 @@
 <script setup>
 import ConnectButton from '@/components/ConnectButton.vue';
 import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../../stores/main';
 
 const mainStore = useMainStore();
+const router = useRouter();
 const addr = ref('');
 const firstLetter = ref('');
 
@@ -20,13 +22,22 @@ watch(
         firstLetter.value = beg.slice(0, 1);
     }
 );
+
+function userPage() {
+    router.push({ name: 'profile' });
+}
+
 </script>
 
 <template>
     <div v-if="!mainStore.walletConn" class="app-header__child">
         <connect-button>Connect your wallet</connect-button>
     </div>
-    <div v-else class="flex-row app-header__child">
+    <div
+        v-else
+        @click="userPage"
+        class="flex-row app-header__child address-container"
+    >
         <span class="addr">{{ addr }}</span>
         <div class="flex-row flex-center first-letter">
             <span>{{ firstLetter }}</span>
@@ -47,5 +58,8 @@ watch(
     color: var(--color-dark-gray-2);
     font-weight: bold;
     font-size: 35px;
+}
+.address-container {
+    cursor: pointer;
 }
 </style>

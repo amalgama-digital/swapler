@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import MainPage from '../pages/MainPage.vue';
 import SwapPage from '../pages/SwapPage.vue';
+import UserPage from '../pages/UserPage.vue';
+import LotPage from '../pages/LotPage.vue'
 
 const routes = [
     {
@@ -14,6 +16,16 @@ const routes = [
         name: 'swap',
         component: SwapPage,
     },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: UserPage
+    },
+    {
+        path: '/add-lot',
+        name: 'add-lot',
+        component: LotPage
+    }
 ];
 
 const router = createRouter({

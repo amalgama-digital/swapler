@@ -52,6 +52,10 @@ button {
     justify-content: start;
 }
 
+.flex-space-evenly {
+    justify-content: space-evenly;
+}
+
 .gap-05 {
     gap: 0.5rem;
 }
