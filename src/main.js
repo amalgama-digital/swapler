@@ -11,6 +11,12 @@ window.signer = new Signer({
     NODE_URL: 'https://nodes.wavesnodes.com',
 });
 
+// testnet
+window.contractAddress = ""
+
+// mainnet
+// window.contractAddress = ""
+
 const app = createApp(App);
 
 app.use(createPinia());

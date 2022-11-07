@@ -104,6 +104,7 @@ function goBack() {
 }
 .image-container {
     width: fit-content;
+    cursor: pointer;
 }
 .image-container > img {
     width: 120px;

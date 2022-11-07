@@ -49,10 +49,10 @@ function confirm(typ) {
             metadata.desc = description.value;
             break;
         case 'exch':
-            metadata.exch = exchangePrice.value;
+            metadata.exch = Number(exchangePrice.value);
             break;
         case 'inst':
-            metadata.inst = instantPrice.value;
+            metadata.inst = Number(instantPrice.value);
             break;
         default:
             break;
@@ -61,6 +61,41 @@ function confirm(typ) {
 }
 function closePopup() {
     showPopup.value = false;
+}
+async function addLotTODO() {
+    try {
+
+        const resp = await window.signer?.invoke({
+            dApp: window.contractAddress,
+            fee: 900000,
+            payment: [
+                {
+                    assetId: '', // TODO: asset address
+                    amount: 1,
+                },
+            ],
+            call: {
+                function: '', // TODO: set function name
+                args: [
+                    {
+                        type: 'string',
+                        value: metadata.desc
+                    },
+                    {
+                        type: 'integer',
+                        value: metadata.exch * 100000000
+                    },
+                    {
+                        type: 'integer',
+                        value: metadata.inst * 100000000
+                    }
+                ]
+            },
+        })
+        .broadcast();
+    } catch(error) {
+        console.error(error);
+    }
 }
 </script>
 
