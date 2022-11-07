@@ -22,7 +22,7 @@ const exchangePrice = ref(undefined);
 const instantPrice = ref(undefined);
 
 const addLotDisabled = computed(() => {
-    return !(metadata.exch || metadata.inst);
+    return !(metadata.exch && metadata.inst);
 });
 
 function displayPopup(typ) {
@@ -147,7 +147,7 @@ async function addLotTODO() {
                             Add exchange price
                         </basic-button>
                         <div v-else>
-                            <span>{{ metadata.exch }}</span>
+                            <span class="waves">{{ metadata.exch }}</span>
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </div>
                     </div>
@@ -160,7 +160,7 @@ async function addLotTODO() {
                             Add instant exchange price
                         </basic-button>
                         <div v-else>
-                            <span>{{ metadata.inst }}</span>
+                            <span class="waves">{{ metadata.inst }}</span>
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </div>
                     </div>
@@ -294,5 +294,8 @@ input.price {
 }
 input.price:focus {
     outline: none;
+}
+span.waves {
+    font-size: 20px;
 }
 </style>
