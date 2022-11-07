@@ -1,5 +1,5 @@
 <template>
-    <button class="button add-btn"><slot>Add something</slot></button>
+    <button v-bind="$attrs" class="button add-btn"><slot>Add something</slot></button>
 </template>
 
 <style scoped>
