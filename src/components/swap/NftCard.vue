@@ -1,17 +1,9 @@
 <script setup>
-import { useSwapStore } from '../../stores/swap';
-
 import CardFooter from './nft-card/CardFooter.vue';
 import CardImage from './nft-card/CardImage.vue';
 
 const props = defineProps(['item']);
 
-const swapStore = useSwapStore();
-
-function showPopupWithItem(item) {
-    swapStore.showPopup = true;
-    swapStore.selectedItem = item;
-}
 </script>
 
 <template>
@@ -25,7 +17,9 @@ function showPopupWithItem(item) {
             :cost="props.item.cost"
             :offers="props.item.offers"
             @show-popup="showPopupWithItem(item)"
-        ></card-footer>
+        >
+            <slot></slot>
+        </card-footer>
     </div>
 </template>
 

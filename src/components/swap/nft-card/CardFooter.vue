@@ -18,7 +18,8 @@ function showPopup() {
             </div>
             <span class="offers-count">{{ props.offers }} offers</span>
         </div>
-        <button @click="showPopup" class="offer-btn">Quick Offer</button>
+        <slot></slot>
+        <!-- <button @click="showPopup" class="offer-btn">Quick Offer</button> -->
     </div>
 </template>
 

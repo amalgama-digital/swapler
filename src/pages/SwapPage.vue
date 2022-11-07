@@ -88,6 +88,10 @@ function closePopup() {
 function sort(k) {
     console.debug(k);
 }
+function showPopupWithItem(item) {
+    swapStore.showPopup = true;
+    swapStore.selectedItem = item;
+}
 </script>
 
 <template>
@@ -105,7 +109,14 @@ function sort(k) {
         </div>
         <!-- NftCards -->
         <div class="flex-row flex-center cards">
-            <NftCard v-for="item in items" :key="item.n" :item="item"></NftCard>
+            <NftCard v-for="item in items" :key="item.n" :item="item">
+                <button
+                    @click="showPopupWithItem(item)" 
+                    class="offer-btn"
+                >
+                    Quick Offer
+                </button>
+            </NftCard>
         </div>
         <popup-component :popup-show="swapStore.showPopup">
             <img
@@ -155,5 +166,14 @@ function sort(k) {
     width: 0.1rem;
 
     background-color: var(--color-text);
+}
+.offer-btn {
+    font-size: 16px;
+    color: var(--color-green);
+    border: 2px solid var(--color-green);
+    border-radius: 14px;
+    background-color: inherit;
+    min-width: 8rem;
+    cursor: pointer;
 }
 </style>
