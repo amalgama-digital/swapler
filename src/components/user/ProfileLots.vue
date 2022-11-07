@@ -83,7 +83,7 @@ function changeShowState(el) {
                 </div>
                 <!-- nfts for swap -->
                 <div v-if="show.swap">
-                    <div class="flex-row flex-center cards">
+                    <div class="flex-row flex-start cards">
                         <nft-card v-for="item in items" :key="item.n" :item="item"></nft-card>
                     </div>
                 </div>

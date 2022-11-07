@@ -31,5 +31,6 @@ p {
     line-height: 2rem;
     font-style: normal;
     font-weight: 300;
+    text-align: end;
 }
 </style>

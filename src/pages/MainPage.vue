@@ -14,7 +14,6 @@ import LinksComponent from '../components/main/LinksComponent.vue';
 
 <style scoped>
 .main-container {
-    height: 100vh;
-    justify-content: space-between;
+    justify-content: start;
 }
 </style>

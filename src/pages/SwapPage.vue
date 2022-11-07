@@ -108,7 +108,7 @@ function showPopupWithItem(item) {
             </div>
         </div>
         <!-- NftCards -->
-        <div class="flex-row flex-center cards">
+        <div class="flex-row flex-start w-80 cards">
             <NftCard v-for="item in items" :key="item.n" :item="item">
                 <button
                     @click="showPopupWithItem(item)" 

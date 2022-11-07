@@ -5,14 +5,19 @@ import RightSide from './header/RightSide.vue';
 </script>
 
 <template>
-    <header class="flex-row w-80 app-header">
-        <LeftSide />
-        <MiddleSide />
-        <RightSide />
-    </header>
+    <div class="flex-column flex-center header-container">
+        <div class="flex-row w-80 app-header">
+            <LeftSide />
+            <MiddleSide />
+            <RightSide />
+        </div>
+    </div>
 </template>
 
 <style scoped>
+.header-container {
+    background-color: #242424;
+}
 .app-header {
     position: sticky;
     top: 0;

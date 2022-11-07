@@ -7,6 +7,7 @@
 
 <style scoped>
 .app-header__child {
+    justify-content: flex-start;
     gap: 0.3rem;
 }
 .app-header__child > img {

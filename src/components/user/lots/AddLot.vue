@@ -179,14 +179,13 @@ async function addLotTODO() {
         <!-- Lot metadata inputs -->
         <popup-component :popup-show="showPopup">
             <div class="flex-column flex-center w-100 h-100 popup-content">
-                <h2>{{ selectedMetadata.text }}</h2>
+                <h1>{{ selectedMetadata.text }}</h1>
                 <div>
                     <textarea
                         class="description"
                         v-if="selectedMetadata.typ == 'desc'"
                         v-model="description"
-                        cols="30"
-                        rows="10">
+                    >
                     </textarea>
                     <div v-else-if="selectedMetadata.typ == 'exch'">
                         <input class="price" v-model="exchangePrice" placeholder="0" type="text">
@@ -286,10 +285,10 @@ input.price {
     color: var(--color-text);
     border: none;
     border-radius: 0.5rem;
-    max-width: 8rem;
-    font-size: 20px;
-    line-height: 24px;
-    height: 2rem;
+    max-width: 10rem;
+    font-size: 30px;
+    line-height: 36px;
+    height: 3rem;
     text-align: end;
 }
 input.price:focus {

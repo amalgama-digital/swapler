@@ -46,6 +46,9 @@ function userPage() {
 </template>
 
 <style scoped>
+.app-header__child {
+    justify-content: flex-end;
+}
 .addr {
     color: var(--color-green);
     font-size: 18px;

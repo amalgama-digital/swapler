@@ -23,10 +23,10 @@
     border: 2px solid #fff;
     transition: border-color 500ms;
 
-    max-width: calc(var(--comp-max-size) - var(--comp-padding));
+    max-width: 33%;
     max-height: calc(var(--comp-max-size) - var(--comp-padding));
 
-    width: auto;
+    width: 25%;
     height: auto;
 
     min-width: var(--comp-min-size);
