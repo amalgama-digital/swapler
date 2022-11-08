@@ -146,7 +146,11 @@ async function buy(assetId, payment) {
         };
     }
 }
-// confirm offer
+/**
+ * confirm offer
+ * @param {String} offerId 
+ * @returns 
+ */
 async function swapDone(offerId) {
     const args = [
         {

@@ -1,6 +1,8 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
 
+// import * as wallet from '../../../helpers/wallet'
+
 import BasicButton from '../../BasicButton.vue';
 import PopupComponent from '../../PopupComponent.vue';
 
@@ -62,40 +64,11 @@ function confirm(typ) {
 function closePopup() {
     showPopup.value = false;
 }
-async function addLotTODO() {
-    try {
-
-        const resp = await window.signer?.invoke({
-            dApp: window.contractAddress,
-            fee: 900000,
-            payment: [
-                {
-                    assetId: '', // TODO: asset address
-                    amount: 1,
-                },
-            ],
-            call: {
-                function: '', // TODO: set function name
-                args: [
-                    {
-                        type: 'string',
-                        value: metadata.desc
-                    },
-                    {
-                        type: 'integer',
-                        value: metadata.exch * 100000000
-                    },
-                    {
-                        type: 'integer',
-                        value: metadata.inst * 100000000
-                    }
-                ]
-            },
-        })
-        .broadcast();
-    } catch(error) {
-        console.error(error);
-    }
+async function addLot() {
+    // await wallet.offerForSale(
+    //     selectedToken.address,
+    //     instantPrice.value
+    // );
 }
 </script>
 

@@ -2,9 +2,14 @@
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
+import { useManageStore } from '../../stores/manage'
+
 import NftCard from '../swap/NftCard.vue';
+import BasicButton from '../BasicButton.vue';
 
 const router = useRouter();
+const manageStore = useManageStore();
+
 const items = reactive([
     {
         n: 1,
@@ -67,6 +72,10 @@ function goToAddLot() {
 function changeShowState(el) {
     show[el] = !show[el];
 }
+function manage(item) {
+    manageStore.manageItem = item;
+    router.push({name: 'manage-asset'});
+}
 </script>
 
 <template>
@@ -84,7 +93,13 @@ function changeShowState(el) {
                 <!-- nfts for swap -->
                 <div v-if="show.swap">
                     <div class="flex-row flex-start cards">
-                        <nft-card v-for="item in items" :key="item.n" :item="item"></nft-card>
+                        <nft-card v-for="item in items" :key="item.n" :item="item">
+                            <basic-button
+                                @click="manage(item)"
+                            >
+                                Manage
+                            </basic-button>
+                        </nft-card>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import { reactive, ref } from 'vue';
 import { useManageStore } from '../stores/manage';
 
 import BasicButton from '../components/BasicButton.vue';
+import * as wallet from '../helpers/wallet';
 
 const manageStore = useManageStore();
 
@@ -29,6 +30,10 @@ const selectedOffer = ref(undefined);
 function selectOffer(offer) {
     selectedOffer.value = offer;
 }
+function acceptOffer() {
+    // wallet.swapDone()
+}
+function cancelSelling() {}
 function removeOffer() {
     selectedOffer.value = undefined;
 }
@@ -37,7 +42,6 @@ function removeOffer() {
 <template>
     <div class="flex-column flex-center w-100">
         <div class="flex-column flex-start w-80">
-
             <div class="flex-row info-container">
                 <div class="image-container">
                     <img :src="manageStore.manageItem.img" alt="" />
@@ -57,6 +61,9 @@ function removeOffer() {
                         </span>
                     </div>
                 </div>
+            </div>
+            <div>
+                <BasicButton>Cancel selling</BasicButton>
             </div>
             <div class="flex-column flex-start">
                 <span>Offers:</span>

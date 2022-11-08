@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useSwapStore } from '../../../stores/swap';
-// import { invokeOffer } from '../../../helpers/wallet';
+import * as wallet from '../../../helpers/wallet';
 
 import BasicButton from '../../BasicButton.vue';
 
@@ -14,9 +14,26 @@ const offering = computed(() => {
 });
 
 // TODO: implement it right
-function sendOffer() {
+async function sendOffer() {
     console.debug('stub send offer');
     console.log(swapStore.nftsToSwap, swapStore.tokensToSwap);
+    // let payment = [];
+    // if (swapStore.nftsToSwap.length) {
+    //     payment.push({
+    //         assetId: swapStore.nftsToSwap[0],
+    //         amount: 1
+    //     });
+    // }
+    // if(swapStore.tokensToSwap > 0) {
+    //     payment.push({
+    //         assetId: 'WAVES', // TODO: selectable
+    //         amount: swapStore.tokensToSwap * Math.pow(10, 8)
+    //     })
+    // }
+    // wallet.offerForSwap(
+    //     swapStore.selectedItem.address, // or id
+    //     payment
+    // );
 }
 </script>
 
