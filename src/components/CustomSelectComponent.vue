@@ -45,7 +45,7 @@ onMounted(() => {
         @click="
           selected = option;
           open = false;
-          $emit('input', option);
+          emit('input', option);
         "
       >
         {{ option }}

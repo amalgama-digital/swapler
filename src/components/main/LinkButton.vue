@@ -42,12 +42,12 @@
     border-color: var(--color-green);
 }
 .lnk-label {
-    font-size: 70px;
+    font-size: 4.5rem;
     line-height: 78px;
     width: fit-content;
 }
 .lnk-descr {
-    font-size: 24px;
+    font-size: 1.5rem;
     line-height: 28px;
     color: var(--color-gray);
     width: 70%;

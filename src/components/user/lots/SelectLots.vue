@@ -128,17 +128,18 @@ function goBack() {
     letter-spacing: -0.02rem;
 }
 .cost-text {
-    font-size: 18px;
+    font-size: 1.3rem;
     color: var(--color-gray);
 }
 .cost-price {
-    font-size: 18px;
+    font-size: 1.3rem;
     color: var(--color-text);
 }
 .cancel-btn {
     background-color: inherit;
     border: none;
     color: var(--color-green);
+    font-weight: 300;
 }
 .btn-container {
     margin-top: 1rem;

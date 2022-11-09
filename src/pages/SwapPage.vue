@@ -1,7 +1,8 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
 import { useSwapStore } from '../stores/swap.js';
+import * as sorting from '../helpers/sort.js'
 
 import NftCard from '../components/swap/NftCard.vue';
 import PopupComponent from '../components/PopupComponent.vue';
@@ -19,7 +20,7 @@ const sortBy = reactive([
     'Price: High to low'
 ]);
 
-const items = reactive([
+const items = ref([
     {
         n: 1,
         cost: 1,
@@ -87,6 +88,18 @@ function closePopup() {
 // TODO: improve
 function sort(k) {
     console.debug(k);
+    switch (k) {
+        case sortBy[2]:
+            items.value = sorting.sortLowestPrice(items.value);
+            break
+        case sortBy[3]:
+            const s = sorting.sortHighestPrice(items.value);
+            console.debug(s);
+            break;
+        default:
+            console.debug('def')
+            break;
+    }
 }
 function showPopupWithItem(item) {
     swapStore.showPopup = true;
@@ -139,9 +152,10 @@ function showPopupWithItem(item) {
     margin-top: 0.7rem;
 }
 .sort-container {
-    font-size: 14px;
+    font-size: 1.2rem;
     font-family: 'Roboto';
     gap: 0.5rem;
+    margin: 1rem 0 1rem 0;
 }
 .cards {
     flex-wrap: wrap;

@@ -10,7 +10,7 @@ const manageStore = useManageStore();
 
 const mockOffers = reactive([
     {
-        address: '0xb1a3a',
+        address: 'efe98c238ebc5de4627a57459a1968725',
         exchange: 'Waves Punks #21 + 5 waves'
     },
     {
@@ -40,8 +40,8 @@ function removeOffer() {
 </script>
 
 <template>
-    <div class="flex-column flex-center w-100">
-        <div class="flex-column flex-start w-80">
+    <div class="flex-column flex-center w-100 mt-1r">
+        <div class="flex-column flex-start w-80 gap-1r">
             <div class="flex-row info-container">
                 <div class="image-container">
                     <img :src="manageStore.manageItem.img" alt="" />
@@ -65,31 +65,33 @@ function removeOffer() {
             <div>
                 <BasicButton>Cancel selling</BasicButton>
             </div>
-            <div class="flex-column flex-start">
-                <span>Offers:</span>
-                <div
-                    v-for="(offer, n) in mockOffers"
-                    :key="n"
-                    class="flex-row flex-space-between offer"
-                    @click="selectOffer(offer)"
-                >
-                    <span>{{ offer.address }} </span>
-                    <span>{{ offer.exchange }}</span>
+            <div class="flex-column flex-start gap-1r">
+                <span class="offers-text">Offers:</span>
+                <div>
+                    <div
+                        v-for="(offer, n) in mockOffers"
+                        :key="n"
+                        class="flex-row flex-space-between offer"
+                        @click="selectOffer(offer)"
+                    >
+                        <span>{{ offer.address }} </span>
+                        <span>{{ offer.exchange }}</span>
+                    </div>
                 </div>
             </div>
             <div
                 v-if="selectedOffer"
-                class="flex-column flex-start"
+                class="flex-column flex-start selected-offer gap-1r"
             >
                 <div class="flex-column flex-start">
                     <span>Accept an offer from</span>
-                    <span>{{ selectedOffer.address }}</span>
+                    <span class="green-text">{{ selectedOffer.address }}</span>
                 </div>
                 <div class="flex-column flex-start">
                     <span>for</span>
-                    <span>{{ selectedOffer.exchange }}</span>
+                    <span class="green-text">{{ selectedOffer.exchange }}</span>
                 </div>
-                <div>
+                <div class="flex-row flex-center gap-1r">
                     <button class="btn">Yes</button>
                     <basic-button @click="removeOffer">No</basic-button>
                 </div>
@@ -127,15 +129,34 @@ function removeOffer() {
     gap: 0.4rem;
 }
 .offer {
-    width: 20rem; 
+    width: 35rem;
 }
 .offer:hover {
     color: var(--color-green);
     cursor: pointer;
 }
+.offers-text {
+    color: var(--color-gray);
+}
+.gap-1r {
+    gap: 1rem;
+}
 .btn {
     background-color: inherit;
     color: var(--color-green);
     border: none;
+}
+.selected-offer {
+    border: 0.2rem solid var(--color-green);
+    border-radius: 0.5rem;
+    padding: 0.7rem;
+    width: 40%;
+    font-size: 1.3rem;
+}
+.green-text {
+    color: var(--color-green);
+}
+.mt-1r {
+    margin-top: 1rem;
 }
 </style>

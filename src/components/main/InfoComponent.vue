@@ -15,7 +15,7 @@ img {
     width: 146px;
 }
 p {
-    font-size: 81px;
+    font-size: 5rem;
 }
 .info-container {
     justify-content: space-between;
