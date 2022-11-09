@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../stores/main';
 
-import { getMetadata, urlByIssuer } from '../helpers/metadata'
+import { getMetadata, urlByIssuer } from '../helpers/metadata.js'
 
 import SelectLots from '../components/user/lots/SelectLots.vue';
 import AddLot from '../components/user/lots/AddLot.vue';
