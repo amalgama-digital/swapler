@@ -1,7 +1,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
 
-// import * as wallet from '../../../helpers/wallet'
+import * as wallet from '../../../helpers/wallet'
 
 import BasicButton from '../../BasicButton.vue';
 import PopupComponent from '../../PopupComponent.vue';
@@ -65,10 +65,13 @@ function closePopup() {
     showPopup.value = false;
 }
 async function addLot() {
-    // await wallet.offerForSale(
-    //     selectedToken.address,
-    //     instantPrice.value
-    // );
+    const wantPrice = Number(instantPrice.value);
+    console.debug(wantPrice);
+    const result = await wallet.offerForSale(
+        props.selectedToken.assetId,
+        wantPrice
+    );
+    console.debug(result);
 }
 </script>
 
@@ -78,19 +81,19 @@ async function addLot() {
         <div class="flex-row flex-space-between w-100">
             <div class="flex-row info-container">
                 <div class="image-container">
-                    <img :src="props.selectedToken.img" alt="" />
+                    <img :src="selectedToken.metadata.url" alt="" />
                 </div>
                 <div class="flex-column item-info">
                     <div class="flex-column item-info__name">
-                        <span class="item-name">{{ props.selectedToken.name }}</span>
+                        <span class="item-name">{{ selectedToken.name }}</span>
                         <span class="item-collection">
-                            {{ props.selectedToken.collection }}
+                            {{ selectedToken.collection }}
                         </span>
                     </div>
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">
-                            {{ props.selectedToken.cost }}
+                            {{ selectedToken.price }}
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </span>
                     </div>

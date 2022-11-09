@@ -1,8 +1,10 @@
 <script setup>
-import { onBeforeMount, reactive, ref } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../stores/main';
+
+import { getMetadata, urlByIssuer } from '../helpers/metadata'
 
 import SelectLots from '../components/user/lots/SelectLots.vue';
 import AddLot from '../components/user/lots/AddLot.vue';
@@ -15,112 +17,7 @@ const components = {
 const router = useRouter();
 const mainStore = useMainStore();
 
-const userNFTs = reactive([
-    {
-        n: 1,
-        cost: 12,
-        offers: 128,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #007',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 2,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 3,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 4,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 5,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 6,
-        cost: 2,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #15',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 7,
-        cost: 1,
-        offers: 2,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #7',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 8,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 9,
-        cost: 2,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #15',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 10,
-        cost: 1,
-        offers: 2,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #7',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 11,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 12,
-        cost: 2,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #15',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 13,
-        cost: 1,
-        offers: 2,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #7',
-        collection: 'Abstraction world',
-    },
-]);
+const userNFTs = reactive([]);
 
 const selectedComponent = ref('select');
 const selectedToken = ref(undefined);
@@ -129,6 +26,11 @@ onBeforeMount(() => {
     if(mainStore.walletConn !== true) {
         router.push({ name: 'main' })
     }
+});
+
+onMounted(async () => {
+    const addr = mainStore.walletAddr;
+    await getNFTs(addr);
 });
 
 function selectToken(nft) {
@@ -141,6 +43,37 @@ function unsetToken() {
 }
 function mockAddLot(lot) {
     console.debug({lot});
+}
+async function getNFTs(address) {
+    const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
+    try {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        for (const elem of data) {
+            const data = {};
+            data.name = elem.name;
+            data.assetId = elem.assetId;
+            data.issuer = elem.issuer;
+
+            const metadata = await getMetadata(elem.description);
+            data.metadata = metadata;
+
+            data.metadata.url = data.metadata.url
+                                ?? await urlByIssuer(
+                                    data.issuer,
+                                    data.assetId
+                                );
+            data.metadata.id = Number(data.name
+                .replace('#', '')
+                .split(' ')[1]);
+
+            data.price = 0;
+
+            userNFTs.push(data);
+        }
+    } catch(error) {
+        console.error(error);
+    }
 }
 </script>
 

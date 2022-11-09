@@ -32,17 +32,17 @@ function goBack() {
                 <div class="flex-row w-100 nfts-container">
                     <div
                         class="image-container"
-                        v-for="nft in userNfts"
-                        :key="nft.n"
+                        v-for="(nft, n) in userNfts"
+                        :key="n"
                         @click="chooseToken(nft)"
                     >
-                        <img class="img-sm" :src="nft.img" alt="" />
+                        <img class="img-sm" :src="nft.metadata.url" alt="" />
                     </div>
                 </div>
             </div>
             <div v-if="choosingToken" class="flex-row gap-07">
                 <div class="image-container">
-                    <img :src="choosingToken.img" alt="" />
+                    <img :src="choosingToken.metadata.url" alt="" />
                 </div>
                 <div class="flex-column flex-space-between">
                     <div class="flex-column gap-05">
@@ -54,7 +54,7 @@ function goBack() {
                     <div class="flex-row cost-container">
                         <span class="cost-text">last cost: </span>
                         <span class="cost-price"
-                            >{{ choosingToken.cost }}
+                            >{{ choosingToken.price }}
                             <img src="/img/svg/rectangle.svg" alt=""
                         /></span>
                     </div>

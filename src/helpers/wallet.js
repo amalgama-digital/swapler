@@ -61,7 +61,7 @@ async function offerForSale(assetId, price) {
         },
         {
             type: 'integer',
-            value: price * Math.pow(10, 8)
+            value: Math.round(price * Math.pow(10, 8))
         }
     ];
     const payment = [
