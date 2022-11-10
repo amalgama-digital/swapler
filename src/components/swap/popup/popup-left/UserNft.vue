@@ -1,119 +1,23 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useSwapStore } from '../../../../stores/swap';
+import { useMainStore } from '../../../../stores/main';
+
+import { getNFTs } from '../../../../helpers/wallet'
 
 import BasicButton from '../../../BasicButton.vue';
 
 const emit = defineEmits(['setComponent']);
 const swapStore = useSwapStore();
+const mainStore = useMainStore();
 const selectedToken = ref(undefined);
 
-const mockNFTs = reactive([
-    {
-        n: 1,
-        cost: 12,
-        offers: 128,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #007',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 2,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 3,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 4,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 5,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 6,
-        cost: 2,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #15',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 7,
-        cost: 1,
-        offers: 2,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #7',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 8,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 9,
-        cost: 2,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #15',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 10,
-        cost: 1,
-        offers: 2,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #7',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 11,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 12,
-        cost: 2,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #15',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 13,
-        cost: 1,
-        offers: 2,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #7',
-        collection: 'Abstraction world',
-    },
-]);
+const userNFTs = reactive([]);
+
+onMounted(async () => {
+    const addr = mainStore.walletAddr;
+    await getNFTs(addr, userNFTs);
+});
 
 function selectToken(nft) {
     selectedToken.value = nft;
@@ -132,17 +36,17 @@ function addToOffer() {
                 <div class="flex-row w-100 nfts-container">
                     <div
                         class="image-container"
-                        v-for="nft in mockNFTs"
+                        v-for="nft in userNFTs"
                         :key="nft.n"
                         @click="selectToken(nft)"
                     >
-                        <img class="img-sm" :src="nft.img" alt="" />
+                        <img class="img-sm" :src="nft.metadata.url" alt="" />
                     </div>
                 </div>
             </div>
             <div v-if="selectedToken" class="flex-row gap-07">
                 <div class="image-container">
-                    <img :src="selectedToken.img" alt="" />
+                    <img :src="selectedToken.metadata.url" alt="" />
                 </div>
                 <div class="flex-column flex-space-between">
                     <div class="flex-column gap-05">
@@ -154,7 +58,7 @@ function addToOffer() {
                     <div class="flex-row cost-container">
                         <span class="cost-text">last cost: </span>
                         <span class="cost-price"
-                            >{{ selectedToken.cost }}
+                            >{{ selectedToken.price }}
                             <img src="/img/svg/rectangle.svg" alt=""
                         /></span>
                     </div>

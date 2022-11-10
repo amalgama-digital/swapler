@@ -1,5 +1,7 @@
 import { ProviderKeeper } from '@waves/provider-keeper';
 
+import { getMetadata, urlByIssuer } from './metadata'
+
 async function connectKeeper() {
     if (window.signer) {
         const authData = { data: 'https://swapler.com/' };
@@ -17,6 +19,38 @@ async function connectKeeper() {
         } catch (error) {
             return { error };
         }
+    }
+}
+
+async function getNFTs(address, userNFTs) {
+    const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
+    try {
+        const resp = await fetch(url);
+        const respData = await resp.json();
+        for (const elem of respData) {
+            const data = {};
+            data.name = elem.name;
+            data.assetId = elem.assetId;
+            data.issuer = elem.issuer;
+
+            const metadata = await getMetadata(elem.description);
+            data.metadata = metadata;
+
+            data.metadata.url = data.metadata.url
+                                ?? await urlByIssuer(
+                                    data.issuer,
+                                    data.assetId
+                                );
+            data.metadata.id = Number(data.name
+                .replace('#', '')
+                .split(' ')[1]);
+
+            data.price = 0;
+
+            userNFTs.push(data);
+        }
+    } catch(error) {
+        console.error(error);
     }
 }
 /**
@@ -235,6 +269,7 @@ async function swapCancel(offerId) {
 
 export { 
     connectKeeper,
+    getNFTs,
     offerForSale,
     offerForSwap,
     buy,

@@ -15,25 +15,25 @@ const offering = computed(() => {
 
 // TODO: implement it right
 async function sendOffer() {
-    console.debug('stub send offer');
-    console.log(swapStore.nftsToSwap, swapStore.tokensToSwap);
-    // let payment = [];
-    // if (swapStore.nftsToSwap.length) {
-    //     payment.push({
-    //         assetId: swapStore.nftsToSwap[0],
-    //         amount: 1
-    //     });
-    // }
-    // if(swapStore.tokensToSwap > 0) {
-    //     payment.push({
-    //         assetId: 'WAVES', // TODO: selectable
-    //         amount: swapStore.tokensToSwap * Math.pow(10, 8)
-    //     })
-    // }
-    // wallet.offerForSwap(
-    //     swapStore.selectedItem.address, // or id
-    //     payment
-    // );
+    let payment = [];
+    if (swapStore.nftsToSwap.length) {
+        payment.push({
+            assetId: swapStore.nftsToSwap[0].assetId,
+            amount: 1
+        });
+    }
+    if(swapStore.tokensToSwap > 0) {
+        payment.push({
+            assetId: 'WAVES', // TODO: selectable
+            amount: swapStore.tokensToSwap * Math.pow(10, 8)
+        })
+    }
+    console.debug(swapStore.selectedItem.offerId)
+    const result = await wallet.offerForSwap(
+        swapStore.selectedItem.offerId, // or id
+        payment
+    );
+    console.log({result})
 }
 </script>
 
@@ -69,7 +69,7 @@ async function sendOffer() {
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">
-                            {{ props.item.price }}
+                            {{ Math.round(props.item.price / Math.pow(10, 8)) }}
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </span>
                     </div>
@@ -81,8 +81,7 @@ async function sendOffer() {
             <div class="flex-column instant-exchange">
                 <span class="instant-exchange__text">instant exchange</span>
                 <ul>
-                    <li>150 <img src="/img/svg/rectangle.svg" alt="" /></li>
-                    <li>Beauty NFT x2</li>
+                    <li>{{ Math.round(props.item.price / Math.pow(10, 8)) }} <img src="/img/svg/rectangle.svg" alt="" /></li>
                 </ul>
             </div>
             <div class="flex-row offer-btn-container">

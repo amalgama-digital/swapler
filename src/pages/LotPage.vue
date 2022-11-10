@@ -30,7 +30,7 @@ onBeforeMount(() => {
 
 onMounted(async () => {
     const addr = mainStore.walletAddr;
-    await getNFTs(addr);
+    await getNFTs(addr, userNFTs);
 });
 
 function selectToken(nft) {
@@ -44,7 +44,7 @@ function unsetToken() {
 function mockAddLot(lot) {
     console.debug({lot});
 }
-async function getNFTs(address) {
+async function getNFTs(address, userNFTs) {
     const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
     try {
         const resp = await fetch(url);

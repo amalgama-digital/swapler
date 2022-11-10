@@ -44,7 +44,7 @@ function removeOffer() {
         <div class="flex-column flex-start w-80 gap-1r">
             <div class="flex-row info-container">
                 <div class="image-container">
-                    <img :src="manageStore.manageItem.img" alt="" />
+                    <img :src="manageStore.manageItem.metadata.url" alt="" />
                 </div>
                 <div class="flex-column item-info">
                     <div class="flex-column item-info__name">
@@ -56,7 +56,7 @@ function removeOffer() {
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">
-                            {{ manageStore.manageItem.cost }}
+                            {{ manageStore.manageItem.price }}
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </span>
                     </div>

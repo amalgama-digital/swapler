@@ -32,7 +32,7 @@ function removeNft(n) {
                 >
                     <div class="flex-row gap-07">
                         <div class="image-container">
-                            <img class="img-sm" :src="nft.img" alt="" />
+                            <img class="img-sm" :src="nft.metadata.url" alt="" />
                         </div>
                         <div class="flex-column flex-space-between">
                             <div class="flex-column gap-05">
@@ -44,7 +44,7 @@ function removeNft(n) {
                             <div class="flex-row cost-container">
                                 <span class="cost-text">last cost: </span>
                                 <span class="cost-price">
-                                    {{ nft.cost }}
+                                    {{ nft.price }}
                                     <img src="/img/svg/rectangle.svg" alt="" />
                                 </span>
                             </div>

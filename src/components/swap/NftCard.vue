@@ -9,12 +9,12 @@ const props = defineProps(['item']);
 <template>
     <div class="flex-column nft-card">
         <card-image
-            :img="item.img"
+            :img="item.metadata.url"
             :name="item.name"
             :collection="item.collection"
         ></card-image>
         <card-footer
-            :cost="props.item.cost"
+            :cost="Math.round(props.item.price / Math.pow(10, 8))"
             :offers="props.item.offers"
             @show-popup="showPopupWithItem(item)"
         >
