@@ -15,8 +15,8 @@ const swapStore = useSwapStore();
 
 // TODO: change
 const sortBy = reactive([
-    'Name ascending',
-    'Name descending',
+    // 'Name ascending',
+    // 'Name descending',
     'Price: Low to high',
     'Price: High to low'
 ]);
@@ -25,8 +25,8 @@ const items = ref(undefined);
 
 onMounted(async () => {
     const data = await getData();
-    console.debug(data);
-    items.value = data;
+    const sorted = sorting.sortLowestPrice(data);
+    items.value = sorted;
 });
 
 function closePopup() {
@@ -38,12 +38,12 @@ function closePopup() {
 
 
 function sort(k) {
-    console.debug(k);
+    console.debug({k});
     switch (k) {
-        case sortBy[2]:
+        case sortBy[0]:
             items.value = sorting.sortLowestPrice(items.value);
             break
-        case sortBy[3]:
+        case sortBy[1]:
             const s = sorting.sortHighestPrice(items.value);
             console.debug(s);
             break;

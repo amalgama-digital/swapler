@@ -41,9 +41,6 @@ function unsetToken() {
     selectedToken.value = undefined;
     selectedComponent.value = 'select';
 }
-function mockAddLot(lot) {
-    console.debug({lot});
-}
 async function getNFTs(address, userNFTs) {
     const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
     try {
@@ -85,7 +82,6 @@ async function getNFTs(address, userNFTs) {
             :selected-token="selectedToken"
             @proceed="selectToken"
             @cancel="unsetToken"
-            @addlot="mockAddLot"
         ></component>
     </div>
 </template>

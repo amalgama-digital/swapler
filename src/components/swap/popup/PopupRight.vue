@@ -28,9 +28,8 @@ async function sendOffer() {
             amount: swapStore.tokensToSwap * Math.pow(10, 8)
         })
     }
-    console.debug(swapStore.selectedItem.offerId)
     const result = await wallet.offerForSwap(
-        swapStore.selectedItem.offerId, // or id
+        swapStore.selectedItem.offerId,
         payment
     );
     console.log({result})

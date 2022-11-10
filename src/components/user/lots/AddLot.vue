@@ -67,12 +67,10 @@ function closePopup() {
 }
 async function addLot() {
     const wantPrice = Number(instantPrice.value);
-    console.debug(wantPrice);
     const result = await wallet.offerForSale(
         props.selectedToken.assetId,
         wantPrice
     );
-    console.debug(result);
     if (result.error) {
         // TODO:
         console.error(result.error);

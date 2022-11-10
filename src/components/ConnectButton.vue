@@ -11,7 +11,7 @@ async function connectWallet() {
         mainStore.walletPubKey = conn.address;
         mainStore.walletConn = true;
     } else {
-        console.debug(conn.error);
+        console.error(conn.error);
     }
 }
 </script>
