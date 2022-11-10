@@ -273,6 +273,7 @@ export {
     offerForSale,
     offerForSwap,
     buy,
+    cancelSelling,
     swapDone,
     swapCancel
 };

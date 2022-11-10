@@ -33,7 +33,10 @@ function selectOffer(offer) {
 function acceptOffer() {
     // wallet.swapDone()
 }
-function cancelSelling() {}
+async function cancelSelling() {
+    const resp = await wallet.cancelSelling(manageStore.manageItem.offerId);
+    console.debug({resp});
+}
 function removeOffer() {
     selectedOffer.value = undefined;
 }
@@ -56,14 +59,14 @@ function removeOffer() {
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">
-                            {{ manageStore.manageItem.price }}
+                            {{ Math.round(manageStore.manageItem.price / Math.pow(10, 8)) }}
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </span>
                     </div>
                 </div>
             </div>
             <div>
-                <BasicButton>Cancel selling</BasicButton>
+                <BasicButton @click="cancelSelling">Cancel selling</BasicButton>
             </div>
             <div class="flex-column flex-start gap-1r">
                 <span class="offers-text">Offers:</span>
