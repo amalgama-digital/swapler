@@ -1,8 +1,9 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 
 import { useSwapStore } from '../stores/swap.js';
 import * as sorting from '../helpers/sort.js'
+import { getData } from '../helpers/market'
 
 import NftCard from '../components/swap/NftCard.vue';
 import PopupComponent from '../components/PopupComponent.vue';
@@ -20,63 +21,13 @@ const sortBy = reactive([
     'Price: High to low'
 ]);
 
-const items = ref([
-    {
-        n: 1,
-        cost: 1,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #1',
-        collection: 'Abstraction world',
-    },
-    {
-        cost: 2,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #3',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 3,
-        cost: 4,
-        offers: 5,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #4',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 4,
-        cost: 1,
-        offers: 7,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #14',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 5,
-        cost: 3,
-        offers: 3,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #21',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 6,
-        cost: 2,
-        offers: 1,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #15',
-        collection: 'Abstraction world',
-    },
-    {
-        n: 7,
-        cost: 1,
-        offers: 2,
-        img: 'http://2.bp.blogspot.com/-HgUDip2qz-U/TglshlCwk2I/AAAAAAAADGo/G6suP1DUGyM/s1600/abstract+background+%25281%2529.jpg',
-        name: 'Abstract #7',
-        collection: 'Abstraction world',
-    },
-]);
+const items = ref(undefined);
+
+onMounted(async () => {
+    const data = await getData();
+    console.debug(data);
+    items.value = data;
+});
 
 function closePopup() {
     swapStore.showPopup = false;
@@ -85,7 +36,7 @@ function closePopup() {
     swapStore.tokensToSwap = 0;
 }
 
-// TODO: improve
+
 function sort(k) {
     console.debug(k);
     switch (k) {

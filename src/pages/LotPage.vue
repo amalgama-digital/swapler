@@ -48,8 +48,8 @@ async function getNFTs(address) {
     const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
     try {
         const resp = await fetch(url);
-        const data = await resp.json();
-        for (const elem of data) {
+        const respData = await resp.json();
+        for (const elem of respData) {
             const data = {};
             data.name = elem.name;
             data.assetId = elem.assetId;

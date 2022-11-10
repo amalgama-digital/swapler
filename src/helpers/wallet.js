@@ -189,7 +189,7 @@ async function cancelSelling(assetId) {
     const payment = [];
     try {
         const invocation = await invokeFunction(
-            'swapDone',
+            'cancelSelling',
             args,
             payment
         );

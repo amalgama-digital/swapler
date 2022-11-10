@@ -43,7 +43,7 @@ async function sendOffer() {
         <div class="flex-column right-container">
             <div class="flex-row info-container">
                 <div class="image-container">
-                    <img :src="props.item.img" alt="" />
+                    <img :src="props.item?.metadata?.url ?? ''" alt="" />
                 </div>
                 <div class="flex-column item-info">
                     <div class="flex-column item-info__name">
@@ -69,7 +69,7 @@ async function sendOffer() {
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">
-                            {{ props.item.cost }}
+                            {{ props.item.price }}
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </span>
                     </div>

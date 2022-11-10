@@ -1,4 +1,4 @@
-async function getMetadata(issuer, description) {    
+async function getMetadata(description) {    
     var resp = {};
     try {
         resp = JSON.parse(description);
@@ -36,7 +36,6 @@ async function urlByIssuer(issuer, assetId) {
             }
         );
         const res = await response.json();
-        console.debug(res);
         return res[0]?.value;
     } catch (error) {
         console.error("url_by_issuer", error);
