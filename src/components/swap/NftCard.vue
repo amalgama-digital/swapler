@@ -15,7 +15,7 @@ const props = defineProps(['item']);
         ></card-image>
         <card-footer
             :cost="props.item.price / Math.pow(10, 8)"
-            :offers="props.item.offers"
+            :offers="props.item.offers.length"
             @show-popup="showPopupWithItem(item)"
         >
             <slot></slot>

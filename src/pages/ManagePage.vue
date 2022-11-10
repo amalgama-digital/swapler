@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 
 import { useManageStore } from '../stores/manage';
 
@@ -8,30 +8,25 @@ import * as wallet from '../helpers/wallet';
 
 const manageStore = useManageStore();
 
-const mockOffers = reactive([
-    {
-        address: 'efe98c238ebc5de4627a57459a1968725',
-        exchange: 'Waves Punks #21 + 5 waves'
-    },
-    {
-        address: '0x50coffee',
-        exchange: 'Waves Punks #22 + 1 waves'
-    },
-    {
-        address: '0xb1a1a1aa',
-        exchange: 'Waves Punks #23 + 7 waves'
-    },
-    {
-        address: '0xeba1a',
-        exchange: 'Waves Punks #24 + 4 waves'
-    }
-]);
+const offers = ref(undefined);
 const selectedOffer = ref(undefined);
-function selectOffer(offer) {
+
+onMounted(() => {
+    offers.value = manageStore.manageItem.offers;
+});
+
+async function selectOffer(offer) {
+    const name = await getAssetName(offer.offerId);
     selectedOffer.value = offer;
+    selectedOffer.value.assetName = name;
 }
 function acceptOffer() {
     // wallet.swapDone()
+}
+async function getAssetName(assetId) {
+    const resp =  await fetch(`${window.nodeURL}/assets/details/${assetId}`);
+    const data = await resp.json(); 
+    return data.name;
 }
 async function cancelSelling() {
     const resp = await wallet.cancelSelling(manageStore.manageItem.offerId);
@@ -69,16 +64,16 @@ function removeOffer() {
                 <BasicButton @click="cancelSelling">Cancel selling</BasicButton>
             </div>
             <div class="flex-column flex-start gap-1r">
-                <span class="offers-text">Offers:</span>
+                <span class="offers-text">Offers from:</span>
                 <div>
                     <div
-                        v-for="(offer, n) in mockOffers"
+                        v-for="(offer, n) in offers"
                         :key="n"
                         class="flex-row flex-space-between offer"
                         @click="selectOffer(offer)"
                     >
-                        <span>{{ offer.address }} </span>
-                        <span>{{ offer.exchange }}</span>
+                        <span>{{ offer.owner }} </span>
+                        <!-- TODO: offer components -->
                     </div>
                 </div>
             </div>
@@ -88,11 +83,17 @@ function removeOffer() {
             >
                 <div class="flex-column flex-start">
                     <span>Accept an offer from</span>
-                    <span class="green-text">{{ selectedOffer.address }}</span>
+                    <span class="green-text">{{ selectedOffer.owner }}</span>
                 </div>
                 <div class="flex-column flex-start">
                     <span>for</span>
-                    <span class="green-text">{{ selectedOffer.exchange }}</span>
+                    <span>
+                        <span class="green-text">{{ selectedOffer.price[1] / Math.pow(10, 8) }} WAVES</span>
+                         + 
+                        <span class="green-text" v-if="selectedOffer.price[0]">
+                            {{ selectedOffer.assetName }}
+                        </span>
+                    </span>
                 </div>
                 <div class="flex-row flex-center gap-1r">
                     <button class="btn">Yes</button>

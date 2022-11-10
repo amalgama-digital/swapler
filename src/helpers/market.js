@@ -28,6 +28,41 @@ function getUniqueOfferIDs(data) {
     return offerIDs;
 }
 
+function parseOffers(offer, data) {
+    const o = {};
+    const offerId = offer?.split('_')[1]
+    const filtered = data.filter(el => el.key.includes(offerId));
+
+    o.issuer = filtered.find(el => el.key.endsWith('issuerSwap'))?.value;
+    o.owner = filtered.find(el => el.key.endsWith('ownerSwap'))?.value
+
+    const price = filtered.find(el => el.key.endsWith('priceSwap'))?.value 
+    const splittedPrice = price?.split('_');
+
+    o.price = splittedPrice ? [splittedPrice[1], Number(splittedPrice[2])] : undefined;
+    o.offerId = offerId;
+    return o
+}
+
+function getAssetOffers(assetId, data) {
+    const offers = [];
+    const assetOffers = data.filter((el) => {
+        return el.key.startsWith('Swap_')
+            && el.key.endsWith('_offerSwap')
+            && el.value == assetId
+    });
+
+    for (const v of assetOffers) {
+        if (v) {
+            const offer = parseOffers(v.key, data);
+            if (offer.owner) {
+                offers.push(offer);
+            }
+        }
+    }
+    return offers;
+}
+
 async function getData() {
     const response = await fetch(`${window.nodeURL}/addresses/data/${window.contractAddress}`);
     const respJSON = await response.json();
@@ -46,9 +81,12 @@ async function getData() {
     for (const offerId of offerIDs) {
         const item = await parseData(offerId, respJSON);
         if (item.owner) {
+            const offers = getAssetOffers(offerId, respJSON);
+            item.offers = offers;
             items.push(item);
         }
     }
+    console.log({items});
     return items;
 }
 

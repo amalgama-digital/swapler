@@ -74,7 +74,7 @@ async function sendOffer() {
                         </span>
                     </div>
                     <span class="offers-count">
-                        {{ props.item.offers }} offers
+                        {{ props.item.offers?.length || 0 }} offers
                     </span>
                 </div>
             </div>
