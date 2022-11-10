@@ -81,7 +81,7 @@ async function sendOffer() {
             <div class="flex-column instant-exchange">
                 <span class="instant-exchange__text">instant exchange</span>
                 <ul>
-                    <li>{{ Math.round(props.item.price / Math.pow(10, 8)) }} <img src="/img/svg/rectangle.svg" alt="" /></li>
+                    <li>{{ props.item.price / Math.pow(10, 8) }} <img src="/img/svg/rectangle.svg" alt="" /></li>
                 </ul>
             </div>
             <div class="flex-row offer-btn-container">

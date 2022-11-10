@@ -49,7 +49,7 @@ function manage(item) {
         <div class="flex-column">
             <div class="flex-column">
                 <div @click="changeShowState('swap')" class="flex-row flex-space-between type-text">
-                    <span>Swap</span>
+                    <span>Swap <span class="count">({{ items.length }})</span></span>
                     <img :class="show.swap ? 'rotate': 'rotate-back'" src="/img/svg/expand_more.svg" alt=">">
                 </div>
                 <!-- nfts for swap -->
@@ -88,6 +88,10 @@ function manage(item) {
 .add-lot {
     color:#BBFD00;
     cursor: pointer;
+}
+.count {
+    color: var(--color-gray);
+    font-size: 1.3rem;
 }
 .cards {
     flex-wrap: wrap;

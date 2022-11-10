@@ -59,7 +59,7 @@ function removeOffer() {
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">
-                            {{ Math.round(manageStore.manageItem.price / Math.pow(10, 8)) }}
+                            {{ manageStore.manageItem.price / Math.pow(10, 8) }}
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </span>
                     </div>

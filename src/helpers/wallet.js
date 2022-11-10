@@ -95,7 +95,7 @@ async function offerForSale(assetId, price) {
         },
         {
             type: 'integer',
-            value: Math.round(price * Math.pow(10, 8))
+            value: price * Math.pow(10, 8)
         }
     ];
     const payment = [
@@ -212,7 +212,9 @@ async function swapDone(offerId) {
     }
 }
 
-// cancel selling nft
+/**
+ * cancel selling nft
+*/
 async function cancelSelling(assetId) {
     const args = [
         {

@@ -1,7 +1,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
-
-import * as wallet from '../../../helpers/wallet'
+import { useRouter } from 'vue-router';
+import * as wallet from '../../../helpers/wallet';
 
 import BasicButton from '../../BasicButton.vue';
 import PopupComponent from '../../PopupComponent.vue';
@@ -9,22 +9,23 @@ import PopupComponent from '../../PopupComponent.vue';
 const emit = defineEmits(['addlot', 'cancel']);
 const props = defineProps(['selectedToken']);
 
+const router = useRouter();
 const showPopup = ref(false);
 const selectedMetadata = reactive({
     typ: '',
     text: ''
 });
 const metadata = reactive({
-    'desc': undefined,
-    'exch': undefined,
+    // 'desc': undefined,
+    // 'exch': undefined,
     'inst': undefined
 });
-const description = ref("");
-const exchangePrice = ref(undefined);
+// const description = ref("");
+// const exchangePrice = ref(undefined);
 const instantPrice = ref(undefined);
 
 const addLotDisabled = computed(() => {
-    return !(metadata.exch && metadata.inst);
+    return !(metadata.inst);
 });
 
 function displayPopup(typ) {
@@ -72,6 +73,12 @@ async function addLot() {
         wantPrice
     );
     console.debug(result);
+    if (result.error) {
+        // TODO:
+        console.error(result.error);
+    } else {
+        router.push({name: 'swap'});
+    }
 }
 </script>
 
@@ -101,7 +108,7 @@ async function addLot() {
             </div>
             <!-- input popup triggers -->
             <div class="flex-column flex-space-between add-info-container w-50">
-                <div class="flex-column add-info__type">
+                <!-- <div class="flex-column add-info__type">
                     <span class="text">Description:</span>
                     <basic-button
                         @click="displayPopup('desc')" class="w-fit"
@@ -112,9 +119,9 @@ async function addLot() {
                     <div v-else>
                         {{ metadata.desc }}
                     </div>
-                </div>
+                </div> -->
                 <div class="flex-row flex-space-between">
-                    <div class="flex-column add-info__type">
+                    <!-- <div class="flex-column add-info__type">
                         <span class="text">Exchange request:</span>
                         <basic-button
                             @click="displayPopup('exch')"
@@ -126,7 +133,7 @@ async function addLot() {
                             <span class="waves">{{ metadata.exch }}</span>
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="flex-column add-info__type">
                         <span class="text">Instant exchange:</span>
                         <basic-button
@@ -157,7 +164,7 @@ async function addLot() {
             <div class="flex-column flex-center w-100 h-100 popup-content">
                 <h1>{{ selectedMetadata.text }}</h1>
                 <div>
-                    <textarea
+                    <!-- <textarea
                         class="description"
                         v-if="selectedMetadata.typ == 'desc'"
                         v-model="description"
@@ -166,8 +173,8 @@ async function addLot() {
                     <div v-else-if="selectedMetadata.typ == 'exch'">
                         <input class="price" v-model="exchangePrice" placeholder="0" type="text">
                         <img src="/img/svg/rectangle.svg" alt="" />
-                    </div>
-                    <div v-else-if="selectedMetadata.typ == 'inst'">
+                    </div> -->
+                    <div v-if="selectedMetadata.typ == 'inst'">
                         <input class="price" v-model="instantPrice" placeholder="0" type="text">
                         <img src="/img/svg/rectangle.svg" alt="" />
                     </div>
