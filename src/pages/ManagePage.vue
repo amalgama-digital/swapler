@@ -1,11 +1,13 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { useManageStore } from '../stores/manage';
-
-import BasicButton from '../components/BasicButton.vue';
 import * as wallet from '../helpers/wallet';
 
+import BasicButton from '../components/BasicButton.vue';
+
+const router = useRouter();
 const manageStore = useManageStore();
 
 const offers = ref(undefined);
@@ -20,8 +22,19 @@ async function selectOffer(offer) {
     selectedOffer.value = offer;
     selectedOffer.value.assetName = name;
 }
-function acceptOffer() {
-    // wallet.swapDone()
+async function acceptOffer() {
+    console.debug();
+    const response = await wallet.swapDone(
+        `Swap_${selectedOffer.value.offerId}_WAVES` // TODO: changeable coins
+    );
+    if (response.error) {
+        console.error(response.error);
+    } else {
+        console.debug(response.response);
+        setTimeout(() => {
+            router.push({name: 'profile'});
+        }, 3000);
+    }
 }
 async function getAssetName(assetId) {
     const resp =  await fetch(`${window.nodeURL}/assets/details/${assetId}`);
@@ -72,7 +85,7 @@ function removeOffer() {
                         class="flex-row flex-space-between offer"
                         @click="selectOffer(offer)"
                     >
-                        <span>{{ offer.owner }} </span>
+                        <span>{{ offer.owner }}</span>
                         <span> {{ offer.assetName }} </span>
                         <!-- TODO: offer components -->
                     </div>
@@ -97,7 +110,7 @@ function removeOffer() {
                     </span>
                 </div>
                 <div class="flex-row flex-center gap-1r">
-                    <button class="btn">Yes</button>
+                    <button @click="acceptOffer" class="btn">Yes</button>
                     <basic-button @click="removeOffer">No</basic-button>
                 </div>
             </div>
