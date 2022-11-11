@@ -1,9 +1,16 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import {
+    onBeforeMount,
+    onMounted,
+    reactive,
+    ref
+} from 'vue';
 
+import { useMainStore } from '../stores/main';
 import { useSwapStore } from '../stores/swap.js';
-import * as sorting from '../helpers/sort.js'
-import { getData } from '../helpers/market'
+import * as sorting from '../helpers/sort.js';
+import { getData } from '../helpers/market';
+import { getLogin } from '../helpers/wallet';
 
 import NftCard from '../components/swap/NftCard.vue';
 import PopupComponent from '../components/PopupComponent.vue';
@@ -11,6 +18,7 @@ import PopupLeft from '../components/swap/popup/PopupLeft.vue';
 import PopupRight from '../components/swap/popup/PopupRight.vue';
 import CustomSelectComponent from '../components/CustomSelectComponent.vue';
 
+const mainStore = useMainStore();
 const swapStore = useSwapStore();
 
 // TODO: change
@@ -22,6 +30,20 @@ const sortBy = reactive([
 ]);
 
 const items = ref(undefined);
+
+onBeforeMount(() => {
+    if (mainStore.walletConn) {
+        return;
+    }
+    const login = getLogin();
+    if(login) {
+        mainStore.walletAddr = login.address;
+        mainStore.walletPubKey = login.publicKey;
+        mainStore.walletConn = true;
+    } else {
+        router.push({ name: 'main' });
+    }
+});
 
 onMounted(async () => {
     const data = await getData();

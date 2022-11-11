@@ -75,7 +75,9 @@ async function addLot() {
         // TODO:
         console.error(result.error);
     } else {
-        router.push({name: 'swap'});
+        setTimeout(() => {
+            router.push({name: 'swap'});
+        }, 3000);
     }
 }
 </script>

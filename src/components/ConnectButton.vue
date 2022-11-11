@@ -8,7 +8,8 @@ async function connectWallet() {
     const conn = await connectKeeper();
     if (!conn.error) {
         mainStore.walletAddr = conn.address;
-        mainStore.walletPubKey = conn.address;
+        mainStore.walletPubKey = conn.publicKey;
+        window.localStorage.setItem('login', JSON.stringify(conn));
         mainStore.walletConn = true;
     } else {
         console.error(conn.error);

@@ -73,6 +73,7 @@ function removeOffer() {
                         @click="selectOffer(offer)"
                     >
                         <span>{{ offer.owner }} </span>
+                        <span> {{ offer.assetName }} </span>
                         <!-- TODO: offer components -->
                     </div>
                 </div>

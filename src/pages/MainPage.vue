@@ -1,6 +1,26 @@
 <script setup>
+import { onBeforeMount } from 'vue';
+
+import { useMainStore } from '../stores/main';
+import { getLogin } from '../helpers/wallet'
+
 import InfoComponent from '../components/main/InfoComponent.vue';
 import LinksComponent from '../components/main/LinksComponent.vue';
+
+const mainStore = useMainStore();
+
+onBeforeMount(() => {
+    if (mainStore.walletConn) {
+        return;
+    }
+    const login = getLogin();
+    if(login) {
+        mainStore.walletAddr = login.address;
+        mainStore.walletPubKey = login.publicKey;
+        mainStore.walletConn = true;
+    }
+});
+
 </script>
 
 <template>

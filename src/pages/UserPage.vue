@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../stores/main';
 
+import { getLogin } from '../helpers/wallet'
+
 import ProfileInfo from '../components/user/ProfileInfo.vue';
 import ProfileLots from '../components/user/ProfileLots.vue';
 
@@ -11,8 +13,17 @@ const router = useRouter();
 const mainStore = useMainStore();
 
 onBeforeMount(() => {
-    if(mainStore.walletConn !== true) {
-        router.push({ name: 'main' })
+    if (mainStore.walletConn) {
+        return;
+    }
+
+    const login = getLogin();
+    if(login) {
+        mainStore.walletAddr = login.address;
+        mainStore.walletPubKey = login.publicKey;
+        mainStore.walletConn = true;
+    } else {
+        router.push({ name: 'main' });
     }
 });
 </script>

@@ -62,7 +62,10 @@ function getAssetOffers(assetId, data) {
     }
     return offers;
 }
-
+/**
+ * fetches contract data from the node api
+ * @returns Object[] 
+ */
 async function getData() {
     const response = await fetch(`${window.nodeURL}/addresses/data/${window.contractAddress}`);
     const respJSON = await response.json();

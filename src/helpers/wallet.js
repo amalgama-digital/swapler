@@ -21,7 +21,20 @@ async function connectKeeper() {
         }
     }
 }
-
+function getLogin() {
+    const login = window.localStorage.getItem('login');
+    window.signer.setProvider(
+        new ProviderKeeper('https://swapler.com')
+    ).then(() => {
+        window.signer.login();
+    });
+    return login ? JSON.parse(login) : undefined;
+}
+/**
+ * 
+ * @param { String } address wallet or contract address which may contain assets
+ * @param { Array } userNFTs Array or reactive array
+ */
 async function getNFTs(address, userNFTs) {
     const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
     try {
@@ -271,6 +284,7 @@ async function swapCancel(offerId) {
 
 export { 
     connectKeeper,
+    getLogin,
     getNFTs,
     offerForSale,
     offerForSwap,
