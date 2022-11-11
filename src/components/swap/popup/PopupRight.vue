@@ -1,11 +1,14 @@
 <script setup>
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useSwapStore } from '../../../stores/swap';
 import * as wallet from '../../../helpers/wallet';
 
 import BasicButton from '../../BasicButton.vue';
+import { routerKey } from 'vue-router';
 
 const props = defineProps(['item']);
+const router = useRouter();
 
 const swapStore = useSwapStore();
 
@@ -32,7 +35,32 @@ async function sendOffer() {
         swapStore.selectedItem.offerId,
         payment
     );
-    console.log({result})
+    if (result.error) {
+        console.error(result.error);
+    } else {
+        console.log(result.response);
+        setTimeout(() => {       
+            router.push({name: 'profile'});
+        }, 3000);
+    }
+}
+
+async function instantBuy() {
+    const payment = [
+        {
+            assetId: 'WAVES',
+            amount: props.item.price
+        }
+    ]
+    const result = await wallet.buy(props.item.offerId, payment);
+    if (result.error) {
+        console.error(result.error);
+    } else {
+        console.log(result.response);
+        setTimeout(() => {
+            routerKey.push({name: 'profile'});
+        }, 3000);
+    }
 }
 </script>
 
@@ -68,7 +96,7 @@ async function sendOffer() {
                     <div class="flex-row cost-container">
                         <span class="cost cost-text">last cost: </span>
                         <span class="flex-row flex-center cost-price">
-                            {{ Math.round(props.item.price / Math.pow(10, 8)) }}
+                            {{ props.item.price / Math.pow(10, 8) }}
                             <img src="/img/svg/rectangle.svg" alt="" />
                         </span>
                     </div>
@@ -84,6 +112,7 @@ async function sendOffer() {
                 </ul>
             </div>
             <div class="flex-row offer-btn-container">
+                <basic-button @click="instantBuy">Instant buy</basic-button>
                 <basic-button @click="sendOffer" :disabled="!offering"
                     >Send an offer</basic-button
                 >

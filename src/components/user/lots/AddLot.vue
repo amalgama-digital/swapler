@@ -66,7 +66,7 @@ function closePopup() {
     showPopup.value = false;
 }
 async function addLot() {
-    const wantPrice = Number(instantPrice.value);
+    const wantPrice = instantPrice.value;
     const result = await wallet.offerForSale(
         props.selectedToken.assetId,
         wantPrice
