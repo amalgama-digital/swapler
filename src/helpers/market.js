@@ -89,10 +89,14 @@ async function getData() {
             items.push(item);
         }
     }
-    console.log({items});
     return items;
 }
-
+async function getAssetName(assetId) {
+    const resp =  await fetch(`${window.nodeURL}/assets/details/${assetId}`);
+    const data = await resp.json(); 
+    return data.name;
+}
 export {
-    getData
+    getData,
+    getAssetName
 }

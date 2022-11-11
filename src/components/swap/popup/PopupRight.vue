@@ -190,6 +190,7 @@ ul li {
 .offer-btn-container {
     width: 95%;
     justify-content: end;
+    gap: 1rem;
 }
 .offer-btn-container > button {
     width: fit-content;

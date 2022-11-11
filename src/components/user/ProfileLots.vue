@@ -2,7 +2,8 @@
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { getData } from '../../helpers/market';
+import { getData, getAssetName } from '../../helpers/market';
+import { swapCancel } from '../../helpers/wallet';
 
 import { useManageStore } from '../../stores/manage';
 import { useMainStore } from '../../stores/main';
@@ -15,6 +16,7 @@ const mainStore = useMainStore();
 const manageStore = useManageStore();
 
 const items = ref([]);
+const offers = ref([]);
 const show = reactive({
     'swap': false,
     'borrow': false,
@@ -25,6 +27,17 @@ onMounted(async () => {
     const data = await getData();
     const userLots = data.filter(e => e.owner === mainStore.walletAddr);
     items.value = userLots;
+    const userOffers = [];
+    for (const v of data) {
+        const x = v.offers.filter(el => el.owner === mainStore.walletAddr);
+        // item.offerId is a user asset id, which he want to swap
+        for (const item of x) {
+            item ? item.wantAssetId = v.offerId: false;
+            item ? item.wantAssetName = await getAssetName(v.offerId): false;
+            item ? item.offerName = await getAssetName(item.offerId): false;
+            item ? offers.value.push(item) : false;
+        }
+    }
 });
 
 function goToAddLot() {
@@ -37,6 +50,18 @@ function changeShowState(el) {
 function manage(item) {
     manageStore.manageItem = item;
     router.push({name: 'manage-asset'});
+}
+async function revokeOffer(off) {
+    console.debug({off});
+    const id = `Swap_${off.offerId}_WAVES`;
+    const result = await swapCancel(id);
+    if (result.error) {
+        console.error(result.error);
+    } else {
+        setTimeout(() => {
+            router.push({name: 'swap'});
+        }, 3000);
+    }
 }
 </script>
 
@@ -66,6 +91,14 @@ function manage(item) {
                 </div>
             </div>
             <!-- TODO: borrow and raffle -->
+        </div>
+        <span class="text">My offers:</span>
+        <div>
+            <div v-for="(offer, n) in offers" :key="n">
+                <!-- {{ offer }} -->
+                <span> Swap {{ offer.offerName }} + {{ offer.price[1] / Math.pow(10, 8) }} WAVES for {{ offer.wantAssetName }} </span>
+                <basic-button @click="revokeOffer(offer)">Revoke offer</basic-button>
+            </div>
         </div>
     </div>
 </template>
