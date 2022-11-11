@@ -30,6 +30,12 @@ function getLogin() {
     });
     return login ? JSON.parse(login) : undefined;
 }
+
+async function logout() {
+    const res = await window.signer.logout();
+    window.localStorage.removeItem('login');
+    return res;
+}
 /**
  * 
  * @param { String } address wallet or contract address which may contain assets
@@ -285,6 +291,7 @@ async function swapCancel(offerId) {
 export { 
     connectKeeper,
     getLogin,
+    logout,
     getNFTs,
     offerForSale,
     offerForSwap,
