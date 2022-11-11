@@ -93,10 +93,12 @@ async function revokeOffer(off) {
             <!-- TODO: borrow and raffle -->
         </div>
         <span class="text">My offers:</span>
-        <div>
-            <div v-for="(offer, n) in offers" :key="n">
+        <div class="flex-column flex-start gap-1r">
+            <div class="flex-row flex-space-between w-80 offer-info" v-for="(offer, n) in offers" :key="n">
                 <!-- {{ offer }} -->
-                <span> Swap {{ offer.offerName }} + {{ offer.price[1] / Math.pow(10, 8) }} WAVES for {{ offer.wantAssetName }} </span>
+                <span>
+                    Swap {{ offer.offerName }} + {{ offer.price[1] / Math.pow(10, 8) }} WAVES for {{ offer.wantAssetName }}
+                </span>
                 <basic-button @click="revokeOffer(offer)">Revoke offer</basic-button>
             </div>
         </div>
@@ -129,6 +131,12 @@ async function revokeOffer(off) {
 .cards {
     flex-wrap: wrap;
     gap: 1.5rem;
+}
+.offer-info {
+    align-items: center;
+}
+.gap-1r {
+    gap: 1rem;
 }
 /* animation */
 .rotate {
