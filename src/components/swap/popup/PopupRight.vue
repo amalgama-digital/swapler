@@ -22,14 +22,14 @@ async function sendOffer() {
     if (swapStore.nftsToSwap.length) {
         payment.push({
             assetId: swapStore.nftsToSwap[0].assetId,
-            amount: 1
+            amount: 1,
         });
     }
-    if(swapStore.tokensToSwap > 0) {
+    if (swapStore.tokensToSwap > 0) {
         payment.push({
             assetId: 'WAVES', // TODO: selectable
-            amount: swapStore.tokensToSwap * Math.pow(10, 8)
-        })
+            amount: swapStore.tokensToSwap * Math.pow(10, 8),
+        });
     }
     const result = await wallet.offerForSwap(
         swapStore.selectedItem.offerId,
@@ -39,8 +39,8 @@ async function sendOffer() {
         console.error(result.error);
     } else {
         console.log(result.response);
-        setTimeout(() => {       
-            router.push({name: 'profile'});
+        setTimeout(() => {
+            router.push({ name: 'profile' });
         }, 3000);
     }
 }
@@ -49,16 +49,16 @@ async function instantBuy() {
     const payment = [
         {
             assetId: 'WAVES',
-            amount: props.item.price
-        }
-    ]
+            amount: props.item.price,
+        },
+    ];
     const result = await wallet.buy(props.item.offerId, payment);
     if (result.error) {
         console.error(result.error);
     } else {
         console.log(result.response);
         setTimeout(() => {
-            routerKey.push({name: 'profile'});
+            routerKey.push({ name: 'profile' });
         }, 3000);
     }
 }
@@ -108,7 +108,10 @@ async function instantBuy() {
             <div class="flex-column instant-exchange">
                 <span class="instant-exchange__text">instant exchange</span>
                 <ul>
-                    <li>{{ props.item.price / Math.pow(10, 8) }} <img src="/img/svg/rectangle.svg" alt="" /></li>
+                    <li>
+                        {{ props.item.price / Math.pow(10, 8) }}
+                        <img src="/img/svg/rectangle.svg" alt="" />
+                    </li>
                 </ul>
             </div>
             <div class="flex-row offer-btn-container">

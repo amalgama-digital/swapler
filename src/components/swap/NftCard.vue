@@ -3,7 +3,6 @@ import CardFooter from './nft-card/CardFooter.vue';
 import CardImage from './nft-card/CardImage.vue';
 
 const props = defineProps(['item']);
-
 </script>
 
 <template>

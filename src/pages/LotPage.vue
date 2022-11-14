@@ -10,8 +10,8 @@ import SelectLots from '../components/user/lots/SelectLots.vue';
 import AddLot from '../components/user/lots/AddLot.vue';
 
 const components = {
-    'select': SelectLots,
-    'add': AddLot
+    select: SelectLots,
+    add: AddLot,
 };
 
 const router = useRouter();
@@ -23,8 +23,8 @@ const selectedComponent = ref('select');
 const selectedToken = ref(undefined);
 
 onBeforeMount(() => {
-    if(mainStore.walletConn !== true) {
-        router.push({ name: 'main' })
+    if (mainStore.walletConn !== true) {
+        router.push({ name: 'main' });
     }
 });
 
@@ -55,20 +55,16 @@ async function getNFTs(address, userNFTs) {
             const metadata = await getMetadata(elem.description);
             data.metadata = metadata;
 
-            data.metadata.url = data.metadata.url
-                                ?? await urlByIssuer(
-                                    data.issuer,
-                                    data.assetId
-                                );
-            data.metadata.id = Number(data.name
-                .replace('#', '')
-                .split(' ')[1]);
+            data.metadata.url =
+                data.metadata.url ??
+                (await urlByIssuer(data.issuer, data.assetId));
+            data.metadata.id = Number(data.name.replace('#', '').split(' ')[1]);
 
             data.price = 0;
 
             userNFTs.push(data);
         }
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 }

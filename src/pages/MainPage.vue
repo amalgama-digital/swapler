@@ -2,7 +2,7 @@
 import { onBeforeMount } from 'vue';
 
 import { useMainStore } from '../stores/main';
-import { getLogin } from '../helpers/wallet'
+import { getLogin } from '../helpers/wallet';
 
 import InfoComponent from '../components/main/InfoComponent.vue';
 import LinksComponent from '../components/main/LinksComponent.vue';
@@ -14,13 +14,12 @@ onBeforeMount(() => {
         return;
     }
     const login = getLogin();
-    if(login) {
+    if (login) {
         mainStore.walletAddr = login.address;
         mainStore.walletPubKey = login.publicKey;
         mainStore.walletConn = true;
     }
 });
-
 </script>
 
 <template>

@@ -62,9 +62,7 @@ function goBack() {
             </div>
         </div>
         <div class="flex-row w-100 btn-container">
-            <button class="cancel-btn" @click="goBack">
-                Cancel
-            </button>
+            <button class="cancel-btn" @click="goBack">Cancel</button>
             <basic-button
                 :disabled="choosingToken ? false : true"
                 @click="proceed"

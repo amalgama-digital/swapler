@@ -3,7 +3,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useSwapStore } from '../../../../stores/swap';
 import { useMainStore } from '../../../../stores/main';
 
-import { getNFTs } from '../../../../helpers/wallet'
+import { getNFTs } from '../../../../helpers/wallet';
 
 import BasicButton from '../../../BasicButton.vue';
 

@@ -1,4 +1,4 @@
-function getMetadata(description) {    
+function getMetadata(description) {
     var resp = {};
     try {
         resp = JSON.parse(description);
@@ -21,24 +21,19 @@ async function urlByIssuer(issuer, assetId) {
     try {
         const loc = `${window.nodeURL}/addresses/data/${issuer}`;
         const reqData = {
-            "keys": [
-                `${assetId}_url`
-            ]
+            keys: [`${assetId}_url`],
         };
-        const response = await fetch(
-            loc,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(reqData)
-            }
-        );
+        const response = await fetch(loc, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqData),
+        });
         const res = await response.json();
         return res[0]?.value;
     } catch (error) {
-        console.error("url_by_issuer", error);
+        console.error('url_by_issuer', error);
     }
 }
 

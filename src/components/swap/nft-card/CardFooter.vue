@@ -1,10 +1,5 @@
 <script setup>
 const props = defineProps(['cost', 'offers']);
-const emit = defineEmits(['showPopup']);
-
-function showPopup() {
-    emit('showPopup');
-}
 </script>
 
 <template>
@@ -19,7 +14,6 @@ function showPopup() {
             <span class="offers-count">{{ props.offers }} offers</span>
         </div>
         <slot></slot>
-        <!-- <button @click="showPopup" class="offer-btn">Quick Offer</button> -->
     </div>
 </template>
 

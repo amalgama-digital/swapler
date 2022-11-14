@@ -1,18 +1,11 @@
 <script setup>
-import {
-    onBeforeMount,
-    onMounted,
-    reactive,
-    ref
-} from 'vue';
+import { onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../stores/main';
 import { useSwapStore } from '../stores/swap.js';
 import * as sorting from '../helpers/sort.js';
-import {
-    getData,
-    getAssets
-} from '../helpers/market';
+import { getData, getAssets } from '../helpers/market';
 import { getLogin } from '../helpers/wallet';
 
 import NftCard from '../components/swap/NftCard.vue';
@@ -21,6 +14,7 @@ import PopupLeft from '../components/swap/popup/PopupLeft.vue';
 import PopupRight from '../components/swap/popup/PopupRight.vue';
 import CustomSelectComponent from '../components/CustomSelectComponent.vue';
 
+const router = useRouter();
 const mainStore = useMainStore();
 const swapStore = useSwapStore();
 
@@ -29,7 +23,7 @@ const sortBy = reactive([
     // 'Name ascending',
     // 'Name descending',
     'Price: Low to high',
-    'Price: High to low'
+    'Price: High to low',
 ]);
 
 const items = ref(undefined);
@@ -39,7 +33,7 @@ onBeforeMount(() => {
         return;
     }
     const login = getLogin();
-    if(login) {
+    if (login) {
         mainStore.walletAddr = login.address;
         mainStore.walletPubKey = login.publicKey;
         mainStore.walletConn = true;
@@ -62,19 +56,16 @@ function closePopup() {
     swapStore.tokensToSwap = 0;
 }
 
-
 function sort(k) {
-    console.debug({k});
+    console.debug({ k });
     switch (k) {
         case sortBy[0]:
             items.value = sorting.sortLowestPrice(items.value);
-            break
+            break;
         case sortBy[1]:
-            const s = sorting.sortHighestPrice(items.value);
-            console.debug(s);
+            items.value = sorting.sortHighestPrice(items.value);
             break;
         default:
-            console.debug('def')
             break;
     }
 }
@@ -100,10 +91,7 @@ function showPopupWithItem(item) {
         <!-- NftCards -->
         <div class="flex-row flex-start w-80 cards">
             <NftCard v-for="item in items" :key="item.n" :item="item">
-                <button
-                    @click="showPopupWithItem(item)" 
-                    class="offer-btn"
-                >
+                <button @click="showPopupWithItem(item)" class="offer-btn">
                     Quick Offer
                 </button>
             </NftCard>

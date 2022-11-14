@@ -1,5 +1,5 @@
 <template>
-    <div @click="$router.push({name: 'main'})" class="app-header__child">
+    <div @click="$router.push({ name: 'main' })" class="app-header__child">
         <img src="/img/svg/swapler_icon.svg" alt="" />
         <p class="font-comfortaa-700 hideable">swapler</p>
     </div>

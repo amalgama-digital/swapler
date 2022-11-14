@@ -1,6 +1,6 @@
 import { ProviderKeeper } from '@waves/provider-keeper';
 
-import { getMetadata, urlByIssuer } from './metadata'
+import { getMetadata, urlByIssuer } from './metadata';
 
 async function connectKeeper() {
     if (window.signer) {
@@ -23,11 +23,11 @@ async function connectKeeper() {
 }
 function getLogin() {
     const login = window.localStorage.getItem('login');
-    window.signer.setProvider(
-        new ProviderKeeper('https://swapler.com')
-    ).then(() => {
-        window.signer.login();
-    });
+    window.signer
+        .setProvider(new ProviderKeeper('https://swapler.com'))
+        .then(() => {
+            window.signer.login();
+        });
     return login ? JSON.parse(login) : undefined;
 }
 
@@ -37,7 +37,7 @@ async function logout() {
     return res;
 }
 /**
- * 
+ *
  * @param { String } address wallet or contract address which may contain assets
  * @param { Array } userNFTs Array or reactive array
  */
@@ -55,90 +55,77 @@ async function getNFTs(address, userNFTs) {
             const metadata = await getMetadata(elem.description);
             data.metadata = metadata;
 
-            data.metadata.url = data.metadata.url
-                                ?? await urlByIssuer(
-                                    data.issuer,
-                                    data.assetId
-                                );
-            data.metadata.id = Number(data.name
-                .replace('#', '')
-                .split(' ')[1]);
+            data.metadata.url =
+                data.metadata.url ??
+                (await urlByIssuer(data.issuer, data.assetId));
+            data.metadata.id = Number(data.name.replace('#', '').split(' ')[1]);
 
             data.price = 0;
 
             userNFTs.push(data);
         }
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 }
 /**
- * 
- * @param { String } funcName Name of the function to invoke 
+ *
+ * @param { String } funcName Name of the function to invoke
  * @param { Array } args Arguments for the function [{ type, value }]
  * @param { Object[] } payment Payment Object [{ assetId, amount }]
- * @returns 
+ * @returns
  */
-async function invokeFunction(
-    funcName,
-    args,
-    payment,
-
-) {
+async function invokeFunction(funcName, args, payment) {
     if (window.signer) {
         const invocation = await window.signer.invoke({
             dApp: window.contractAddress,
             fee: 900000, // TODO: check
             payment,
             call: {
-                'function': funcName,
+                function: funcName,
                 args,
             },
         });
         return invocation;
     } else {
-        throw new Error("signer not found");
+        throw new Error('signer not found');
     }
 }
 
 /**
  * Sale asset for waves with given price
  * @param { String } assetId Asset id
- * @param { Number } price 
+ * @param { Number } price
  */
 async function offerForSale(assetId, price) {
     const args = [
         {
             type: 'string',
-            value: 'WAVES'
+            value: 'WAVES',
         },
         {
             type: 'integer',
-            value: price * Math.pow(10, 8)
-        }
+            value: price * Math.pow(10, 8),
+        },
     ];
     const payment = [
         {
             assetId,
             amount: 1,
-        }
+        },
     ];
     try {
-        const invocation = await invokeFunction(
-            'offerForSale',
-            args,
-            payment
-        );
+        const invocation = await invokeFunction('offerForSale', args, payment);
         const response = await invocation.broadcast();
-        return { 
+        return {
             response,
-            error: undefined
+            error: undefined,
         };
-    } catch(error) {
+    } catch (error) {
         return {
             response: undefined,
-            error
-        }
+            error,
+        };
     }
 }
 
@@ -151,24 +138,20 @@ async function offerForSwap(wantAssetId, payment) {
     const args = [
         {
             type: 'string',
-            value: wantAssetId
-        }
+            value: wantAssetId,
+        },
     ];
     try {
-        const invocation = await invokeFunction(
-            'offerForSwap',
-            args,
-            payment
-        );
+        const invocation = await invokeFunction('offerForSwap', args, payment);
         const response = await invocation.broadcast();
-        return { 
+        return {
             response,
-            error: undefined
+            error: undefined,
         };
-    } catch(error) {
+    } catch (error) {
         return {
             response: undefined,
-            error
+            error,
         };
     }
 }
@@ -178,86 +161,74 @@ async function buy(assetId, payment) {
     const args = [
         {
             type: 'string',
-            value: assetId
-        }
+            value: assetId,
+        },
     ];
     try {
-        const invocation = await invokeFunction(
-            'buy',
-            args,
-            payment
-        );
+        const invocation = await invokeFunction('buy', args, payment);
         const response = await invocation.broadcast();
-        return { 
+        return {
             response,
-            error: undefined
+            error: undefined,
         };
-    } catch(error) {
+    } catch (error) {
         return {
             response: undefined,
-            error
+            error,
         };
     }
 }
 /**
  * confirm offer
- * @param {String} offerId 
- * @returns 
+ * @param {String} offerId
+ * @returns
  */
 async function swapDone(offerId) {
     const args = [
         {
             type: 'string',
-            value: offerId
-        }
+            value: offerId,
+        },
     ];
     const payment = [];
     try {
-        const invocation = await invokeFunction(
-            'swapDone',
-            args,
-            payment
-        );
+        const invocation = await invokeFunction('swapDone', args, payment);
         const response = await invocation.broadcast();
-        return { 
+        return {
             response,
-            error: undefined
+            error: undefined,
         };
-    } catch(error) {
+    } catch (error) {
         return {
             response: undefined,
-            error
+            error,
         };
     }
 }
 
 /**
  * cancel selling nft
-*/
+ */
 async function cancelSelling(assetId) {
     const args = [
         {
             type: 'string',
-            value: assetId
-        }
+            value: assetId,
+        },
     ];
     const payment = [];
     try {
-        const invocation = await invokeFunction(
-            'cancelSelling',
-            args,
-            payment
-        );
+        const invocation = await invokeFunction('cancelSelling', args, payment);
         const response = await invocation.broadcast();
-        return { 
+        return {
             response,
-            error: undefined
+            error: undefined,
         };
-    } catch(error) {
+    } catch (error) {
         return {
             response: undefined,
-            error
-        }
+            error,
+        };
     }
 }
 
@@ -265,30 +236,26 @@ async function swapCancel(offerId) {
     const args = [
         {
             type: 'string',
-            value: offerId
-        }
+            value: offerId,
+        },
     ];
     const payment = [];
     try {
-        const invocation = await invokeFunction(
-            'swapCancel',
-            args,
-            payment
-        );
+        const invocation = await invokeFunction('swapCancel', args, payment);
         const response = await invocation.broadcast();
-        return { 
+        return {
             response,
-            error: undefined
+            error: undefined,
         };
-    } catch(error) {
+    } catch (error) {
         return {
             response: undefined,
-            error
+            error,
         };
     }
 }
 
-export { 
+export {
     connectKeeper,
     getLogin,
     logout,
@@ -298,5 +265,5 @@ export {
     buy,
     cancelSelling,
     swapDone,
-    swapCancel
+    swapCancel,
 };

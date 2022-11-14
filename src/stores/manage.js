@@ -6,6 +6,6 @@ export const useManageStore = defineStore('manage', () => {
     const manageItem = ref(undefined);
 
     return {
-        manageItem
-    }
+        manageItem,
+    };
 });

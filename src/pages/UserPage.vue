@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../stores/main';
 
-import { getLogin } from '../helpers/wallet'
+import { getLogin } from '../helpers/wallet';
 
 import ProfileInfo from '../components/user/ProfileInfo.vue';
 import ProfileLots from '../components/user/ProfileLots.vue';
@@ -18,7 +18,7 @@ onBeforeMount(() => {
     }
 
     const login = getLogin();
-    if(login) {
+    if (login) {
         mainStore.walletAddr = login.address;
         mainStore.walletPubKey = login.publicKey;
         mainStore.walletConn = true;
@@ -30,9 +30,7 @@ onBeforeMount(() => {
 
 <template>
     <div class="flex-column flex-center w-100 user-page">
-        <profile-info
-            :address="mainStore.walletAddr"
-        ></profile-info>
+        <profile-info :address="mainStore.walletAddr"></profile-info>
         <profile-lots></profile-lots>
     </div>
 </template>

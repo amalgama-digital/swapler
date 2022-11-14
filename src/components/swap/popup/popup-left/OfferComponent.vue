@@ -32,7 +32,11 @@ function removeNft(n) {
                 >
                     <div class="flex-row gap-07">
                         <div class="image-container">
-                            <img class="img-sm" :src="nft.metadata.url" alt="" />
+                            <img
+                                class="img-sm"
+                                :src="nft.metadata.url"
+                                alt=""
+                            />
                         </div>
                         <div class="flex-column flex-space-between">
                             <div class="flex-column gap-05">

@@ -12,12 +12,8 @@ function sortHighestPrice(data) {
 
 function sortByNameAsc(data) {
     return data.sort((a, b) => {
-        a.name > b.name ? 1 : 0
+        a.name > b.name ? 1 : 0;
     });
 }
 
-export {
-    sortLowestPrice,
-    sortHighestPrice,
-    sortByNameAsc
-};
+export { sortLowestPrice, sortHighestPrice, sortByNameAsc };

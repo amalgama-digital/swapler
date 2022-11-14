@@ -13,19 +13,19 @@ const router = useRouter();
 const showPopup = ref(false);
 const selectedMetadata = reactive({
     typ: '',
-    text: ''
+    text: '',
 });
 const metadata = reactive({
     // 'desc': undefined,
     // 'exch': undefined,
-    'inst': undefined
+    inst: undefined,
 });
 // const description = ref("");
 // const exchangePrice = ref(undefined);
 const instantPrice = ref(undefined);
 
 const addLotDisabled = computed(() => {
-    return !(metadata.inst);
+    return !metadata.inst;
 });
 
 function displayPopup(typ) {
@@ -40,7 +40,8 @@ function displayPopup(typ) {
             selectedMetadata.text = 'Enter the exchange price you want.';
             break;
         case 'inst':
-            selectedMetadata.text = 'Enter the instant exchange price you want.';
+            selectedMetadata.text =
+                'Enter the instant exchange price you want.';
             break;
         default:
             break;
@@ -48,12 +49,13 @@ function displayPopup(typ) {
 }
 function confirm(typ) {
     switch (typ) {
-        case 'desc':
-            metadata.desc = description.value;
-            break;
-        case 'exch':
-            metadata.exch = Number(exchangePrice.value);
-            break;
+        // For future use
+        // case 'desc':
+        //     metadata.desc = description.value;
+        //     break;
+        // case 'exch':
+        //     metadata.exch = Number(exchangePrice.value);
+        //     break;
         case 'inst':
             metadata.inst = Number(instantPrice.value);
             break;
@@ -76,7 +78,7 @@ async function addLot() {
         console.error(result.error);
     } else {
         setTimeout(() => {
-            router.push({name: 'swap'});
+            router.push({ name: 'swap' });
         }, 3000);
     }
 }
@@ -151,13 +153,10 @@ async function addLot() {
             </div>
         </div>
         <div class="flex-row w-100 button-container">
-            <span
-                class="cancel-btn"
-                @click="emit('cancel')"
+            <span class="cancel-btn" @click="emit('cancel')"> Cancel </span>
+            <basic-button :disabled="addLotDisabled" @click="addLot"
+                >Add lot</basic-button
             >
-                Cancel
-            </span>
-            <basic-button :disabled="addLotDisabled" @click="addLot">Add lot</basic-button>
         </div>
         <!-- Lot metadata inputs -->
         <popup-component :popup-show="showPopup">
@@ -175,14 +174,23 @@ async function addLot() {
                         <img src="/img/svg/rectangle.svg" alt="" />
                     </div> -->
                     <div v-if="selectedMetadata.typ == 'inst'">
-                        <input class="price" v-model="instantPrice" placeholder="0" type="text">
+                        <input
+                            class="price"
+                            v-model="instantPrice"
+                            placeholder="0"
+                            type="text"
+                        />
                         <img src="/img/svg/rectangle.svg" alt="" />
                     </div>
                     <span v-else>Hmmm.</span>
                 </div>
                 <div class="flex-row button-container">
-                    <button class="cancel-btn" @click="closePopup">Cancel</button>
-                    <basic-button @click="confirm(selectedMetadata.typ)">Confirm</basic-button>
+                    <button class="cancel-btn" @click="closePopup">
+                        Cancel
+                    </button>
+                    <basic-button @click="confirm(selectedMetadata.typ)"
+                        >Confirm</basic-button
+                    >
                 </div>
             </div>
         </popup-component>
@@ -229,7 +237,6 @@ async function addLot() {
 .text {
     color: #878787;
     font-size: 18px;
-
 }
 .button-container {
     gap: 1rem;

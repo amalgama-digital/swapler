@@ -20,18 +20,18 @@ const routes = [
     {
         path: '/profile',
         name: 'profile',
-        component: UserPage
+        component: UserPage,
     },
     {
         path: '/profile/manage-asset',
         name: 'manage-asset',
-        component: ManagePage
+        component: ManagePage,
     },
     {
         path: '/add-lot',
         name: 'add-lot',
-        component: LotPage
-    }
+        component: LotPage,
+    },
 ];
 
 const router = createRouter({

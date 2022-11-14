@@ -17,9 +17,9 @@ watch(
             const beg = mainStore.walletAddr?.slice(0, 3);
             const len = mainStore.walletAddr?.length;
             const end = mainStore.walletAddr?.slice(len - 3, len);
-    
+
             addr.value = `${beg}...${end}`;
-    
+
             firstLetter.value = beg.slice(0, 1);
         }
     }
@@ -28,7 +28,6 @@ watch(
 function userPage() {
     router.push({ name: 'profile' });
 }
-
 </script>
 
 <template>

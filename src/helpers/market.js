@@ -1,4 +1,4 @@
-import { getMetadata } from './metadata'
+import { getMetadata } from './metadata';
 
 function parseData(offerId, data) {
     const el = {};
@@ -10,7 +10,8 @@ function parseData(offerId, data) {
     el.offer = data.find((v) => v.key === offerId + '_offer')?.value;
     el.price = data.find((v) => v.key === offerId + '_price')?.value;
     el.metadata = getMetadata(
-        data.find((v) => v.key === offerId + '_description')?.value);
+        data.find((v) => v.key === offerId + '_description')?.value
+    );
 
     return el;
 }
@@ -30,26 +31,30 @@ function getUniqueOfferIDs(data) {
 
 function parseOffers(offer, data) {
     const o = {};
-    const offerId = offer?.split('_')[1]
-    const filtered = data.filter(el => el.key.includes(offerId));
+    const offerId = offer?.split('_')[1];
+    const filtered = data.filter((el) => el.key.includes(offerId));
 
-    o.issuer = filtered.find(el => el.key.endsWith('issuerSwap'))?.value;
-    o.owner = filtered.find(el => el.key.endsWith('ownerSwap'))?.value
+    o.issuer = filtered.find((el) => el.key.endsWith('issuerSwap'))?.value;
+    o.owner = filtered.find((el) => el.key.endsWith('ownerSwap'))?.value;
 
-    const price = filtered.find(el => el.key.endsWith('priceSwap'))?.value 
+    const price = filtered.find((el) => el.key.endsWith('priceSwap'))?.value;
     const splittedPrice = price?.split('_');
 
-    o.price = splittedPrice ? [splittedPrice[1], Number(splittedPrice[2])] : undefined;
+    o.price = splittedPrice
+        ? [splittedPrice[1], Number(splittedPrice[2])]
+        : undefined;
     o.offerId = offerId;
-    return o
+    return o;
 }
 
 function getAssetOffers(assetId, data) {
     const offers = [];
     const assetOffers = data.filter((el) => {
-        return el.key.startsWith('Swap_')
-            && el.key.endsWith('_offerSwap')
-            && el.value == assetId
+        return (
+            el.key.startsWith('Swap_') &&
+            el.key.endsWith('_offerSwap') &&
+            el.value == assetId
+        );
     });
 
     for (const v of assetOffers) {
@@ -64,12 +69,14 @@ function getAssetOffers(assetId, data) {
 }
 /**
  * fetches contract data from the node api
- * @returns Object[] 
+ * @returns Object[]
  */
 async function getData() {
-    const response = await fetch(`${window.nodeURL}/addresses/data/${window.contractAddress}`);
+    const response = await fetch(
+        `${window.nodeURL}/addresses/data/${window.contractAddress}`
+    );
     const respJSON = await response.json();
-    
+
     return respJSON;
 }
 
@@ -103,8 +110,12 @@ function getAssets(data) {
 function parseOfferData(offerId, cur, data) {
     const el = {};
     el.offerId = offerId;
-    el.wantAssetId = data.find(el => el.key.endsWith(`${offerId}_${cur}_offerSwap`))?.value;
-    const price = data.find(el => el.key.endsWith(`${offerId}_${cur}_priceSwap`))?.value.split('_');
+    el.wantAssetId = data.find((el) =>
+        el.key.endsWith(`${offerId}_${cur}_offerSwap`)
+    )?.value;
+    const price = data
+        .find((el) => el.key.endsWith(`${offerId}_${cur}_priceSwap`))
+        ?.value.split('_');
     el.price = [price[1], Number(price[2])];
     return el;
 }
@@ -117,7 +128,7 @@ function getUserOffers(data, address) {
     const ids = [];
     for (const el of filtered) {
         const id = el.key.split('_')[1];
-        ids.push(id)
+        ids.push(id);
     }
 
     const userOffers = [];
@@ -129,14 +140,9 @@ function getUserOffers(data, address) {
 }
 
 async function getAssetName(assetId) {
-    const resp =  await fetch(`${window.nodeURL}/assets/details/${assetId}`);
-    const data = await resp.json(); 
+    const resp = await fetch(`${window.nodeURL}/assets/details/${assetId}`);
+    const data = await resp.json();
     return data.name;
 }
 
-export {
-    getData,
-    getAssets,
-    getAssetName,
-    getUserOffers
-}
+export { getData, getAssets, getAssetName, getUserOffers };

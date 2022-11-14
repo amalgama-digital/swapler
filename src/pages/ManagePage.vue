@@ -23,7 +23,6 @@ async function selectOffer(offer) {
     selectedOffer.value.assetName = name;
 }
 async function acceptOffer() {
-    console.debug();
     const response = await wallet.swapDone(
         `Swap_${selectedOffer.value.offerId}_WAVES` // TODO: changeable coins
     );
@@ -32,18 +31,18 @@ async function acceptOffer() {
     } else {
         console.debug(response.response);
         setTimeout(() => {
-            router.push({name: 'profile'});
+            router.push({ name: 'profile' });
         }, 3000);
     }
 }
 async function getAssetName(assetId) {
-    const resp =  await fetch(`${window.nodeURL}/assets/details/${assetId}`);
-    const data = await resp.json(); 
+    const resp = await fetch(`${window.nodeURL}/assets/details/${assetId}`);
+    const data = await resp.json();
     return data.name;
 }
 async function cancelSelling() {
     const resp = await wallet.cancelSelling(manageStore.manageItem.offerId);
-    console.debug({resp});
+    console.debug({ resp });
 }
 function removeOffer() {
     selectedOffer.value = undefined;
@@ -59,7 +58,9 @@ function removeOffer() {
                 </div>
                 <div class="flex-column item-info">
                     <div class="flex-column item-info__name">
-                        <span class="item-name">{{ manageStore.manageItem.name }}</span>
+                        <span class="item-name">{{
+                            manageStore.manageItem.name
+                        }}</span>
                         <span class="item-collection">
                             {{ manageStore.manageItem.collection }}
                         </span>
@@ -102,8 +103,13 @@ function removeOffer() {
                 <div class="flex-column flex-start">
                     <span>for</span>
                     <span>
-                        <span class="green-text">{{ selectedOffer.price[1] / Math.pow(10, 8) }} WAVES</span>
-                         + 
+                        <span class="green-text"
+                            >{{
+                                selectedOffer.price[1] / Math.pow(10, 8)
+                            }}
+                            WAVES</span
+                        >
+                        +
                         <span class="green-text" v-if="selectedOffer.price[0]">
                             {{ selectedOffer.assetName }}
                         </span>

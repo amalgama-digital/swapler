@@ -6,7 +6,7 @@ import {
     getData,
     getAssets,
     getAssetName,
-    getUserOffers
+    getUserOffers,
 } from '../../helpers/market';
 import { swapCancel } from '../../helpers/wallet';
 
@@ -23,15 +23,15 @@ const manageStore = useManageStore();
 const items = ref([]);
 const offers = ref([]);
 const show = reactive({
-    'swap': false,
-    'borrow': false,
-    'raffle': false
-}); 
+    swap: false,
+    borrow: false,
+    raffle: false,
+});
 
 onMounted(async () => {
     const rawData = await getData();
     const data = getAssets(rawData);
-    const userLots = data.filter(e => e.owner === mainStore.walletAddr);
+    const userLots = data.filter((e) => e.owner === mainStore.walletAddr);
     items.value = userLots;
     const o = getUserOffers(rawData, mainStore.walletAddr);
     for (const offer of o) {
@@ -42,7 +42,7 @@ onMounted(async () => {
 });
 
 function goToAddLot() {
-    router.push({name: 'add-lot'});
+    router.push({ name: 'add-lot' });
 }
 
 function changeShowState(el) {
@@ -50,17 +50,17 @@ function changeShowState(el) {
 }
 function manage(item) {
     manageStore.manageItem = item;
-    router.push({name: 'manage-asset'});
+    router.push({ name: 'manage-asset' });
 }
 async function revokeOffer(off) {
-    console.debug({off});
+    console.debug({ off });
     const id = `Swap_${off.offerId}_WAVES`;
     const result = await swapCancel(id);
     if (result.error) {
         console.error(result.error);
     } else {
         setTimeout(() => {
-            router.push({name: 'swap'});
+            router.push({ name: 'swap' });
         }, 3000);
     }
 }
@@ -70,21 +70,35 @@ async function revokeOffer(off) {
     <div class="flex-column w-80 lots-container">
         <div class="flex-row flex-space-between">
             <span class="text">My lots:</span>
-            <span @click="goToAddLot" class="add-lot"><img src="/img/svg/add_circle.svg" /> Add new lot</span>
+            <span @click="goToAddLot" class="add-lot"
+                ><img src="/img/svg/add_circle.svg" /> Add new lot</span
+            >
         </div>
         <div class="flex-column">
             <div class="flex-column">
-                <div @click="changeShowState('swap')" class="flex-row flex-space-between type-text">
-                    <span>Swap <span class="count">({{ items.length }})</span></span>
-                    <img :class="show.swap ? 'rotate': 'rotate-back'" src="/img/svg/expand_more.svg" alt=">">
+                <div
+                    @click="changeShowState('swap')"
+                    class="flex-row flex-space-between type-text"
+                >
+                    <span
+                        >Swap
+                        <span class="count">({{ items.length }})</span></span
+                    >
+                    <img
+                        :class="show.swap ? 'rotate' : 'rotate-back'"
+                        src="/img/svg/expand_more.svg"
+                        alt=">"
+                    />
                 </div>
                 <!-- nfts for swap -->
                 <div v-if="show.swap">
                     <div class="flex-row flex-start cards">
-                        <nft-card v-for="item in items" :key="item.n" :item="item">
-                            <basic-button
-                                @click="manage(item)"
-                            >
+                        <nft-card
+                            v-for="item in items"
+                            :key="item.n"
+                            :item="item"
+                        >
+                            <basic-button @click="manage(item)">
                                 Manage
                             </basic-button>
                         </nft-card>
@@ -95,12 +109,20 @@ async function revokeOffer(off) {
         </div>
         <span class="text">My offers:</span>
         <div class="flex-column flex-start gap-1r">
-            <div class="flex-row flex-space-between w-80 offer-info" v-for="(offer, n) in offers" :key="n">
+            <div
+                class="flex-row flex-space-between w-80 offer-info"
+                v-for="(offer, n) in offers"
+                :key="n"
+            >
                 <!-- {{ offer }} -->
                 <span>
-                    Swap {{ offer.offerName }} + {{ offer.price[1] / Math.pow(10, 8) }} WAVES for {{ offer.wantAssetName }}
+                    Swap {{ offer.offerName }} +
+                    {{ offer.price[1] / Math.pow(10, 8) }} WAVES for
+                    {{ offer.wantAssetName }}
                 </span>
-                <basic-button @click="revokeOffer(offer)">Revoke offer</basic-button>
+                <basic-button @click="revokeOffer(offer)"
+                    >Revoke offer</basic-button
+                >
             </div>
         </div>
     </div>
@@ -122,7 +144,7 @@ async function revokeOffer(off) {
     border-bottom: 2px solid var(--color-green);
 }
 .add-lot {
-    color:#BBFD00;
+    color: #bbfd00;
     cursor: pointer;
 }
 .count {

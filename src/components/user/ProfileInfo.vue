@@ -13,7 +13,7 @@ async function logout() {
     mainStore.walletAddr = undefined;
     mainStore.walletConn = false;
     mainStore.walletPubKey = undefined;
-    router.push({name: 'main'});
+    router.push({ name: 'main' });
 }
 </script>
 
@@ -34,6 +34,6 @@ async function logout() {
 }
 .address-text {
     font-size: 18px;
-    color: #BBFD00;
+    color: #bbfd00;
 }
 </style>
