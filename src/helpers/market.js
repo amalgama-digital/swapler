@@ -1,4 +1,4 @@
-import { getMetadata } from './metadata';
+import { getMetadata, urlByIssuer } from './metadata';
 
 function parseData(offerId, data) {
     const el = {};
@@ -80,7 +80,7 @@ async function getData() {
     return respJSON;
 }
 
-function getAssets(data) {
+async function getAssets(data) {
     const respJSON = data;
     const items = [];
     const idData = [];
@@ -96,6 +96,9 @@ function getAssets(data) {
     const offerIDs = getUniqueOfferIDs(idData);
     for (const offerId of offerIDs) {
         const item = parseData(offerId, respJSON);
+        if (!item.metadata.url) {
+            item.metadata.url = await urlByIssuer(item.issuer, offerId);
+        }
         if (item.owner) {
             const offers = getAssetOffers(offerId, respJSON);
             item.offers = offers;
@@ -138,6 +141,8 @@ function getUserOffers(data, address) {
     }
     return userOffers;
 }
+
+// misc
 
 async function getAssetName(assetId) {
     const resp = await fetch(`${window.nodeURL}/assets/details/${assetId}`);

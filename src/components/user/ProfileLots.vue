@@ -30,7 +30,7 @@ const show = reactive({
 
 onMounted(async () => {
     const rawData = await getData();
-    const data = getAssets(rawData);
+    const data = await getAssets(rawData);
     const userLots = data.filter((e) => e.owner === mainStore.walletAddr);
     items.value = userLots;
     const o = getUserOffers(rawData, mainStore.walletAddr);
