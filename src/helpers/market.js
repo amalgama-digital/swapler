@@ -1,6 +1,6 @@
 import { getMetadata } from './metadata'
 
-async function parseData(offerId, data) {
+function parseData(offerId, data) {
     const el = {};
     el.offerId = offerId;
 
@@ -9,7 +9,7 @@ async function parseData(offerId, data) {
     el.name = data.find((v) => v.key === offerId + '_name')?.value;
     el.offer = data.find((v) => v.key === offerId + '_offer')?.value;
     el.price = data.find((v) => v.key === offerId + '_price')?.value;
-    el.metadata = await getMetadata(
+    el.metadata = getMetadata(
         data.find((v) => v.key === offerId + '_description')?.value);
 
     return el;
@@ -69,6 +69,12 @@ function getAssetOffers(assetId, data) {
 async function getData() {
     const response = await fetch(`${window.nodeURL}/addresses/data/${window.contractAddress}`);
     const respJSON = await response.json();
+    
+    return respJSON;
+}
+
+function getAssets(data) {
+    const respJSON = data;
     const items = [];
     const idData = [];
     for (const elem of respJSON) {
@@ -82,7 +88,7 @@ async function getData() {
 
     const offerIDs = getUniqueOfferIDs(idData);
     for (const offerId of offerIDs) {
-        const item = await parseData(offerId, respJSON);
+        const item = parseData(offerId, respJSON);
         if (item.owner) {
             const offers = getAssetOffers(offerId, respJSON);
             item.offers = offers;
@@ -91,12 +97,46 @@ async function getData() {
     }
     return items;
 }
+
+// market offers
+
+function parseOfferData(offerId, cur, data) {
+    const el = {};
+    el.offerId = offerId;
+    el.wantAssetId = data.find(el => el.key.endsWith(`${offerId}_${cur}_offerSwap`))?.value;
+    const price = data.find(el => el.key.endsWith(`${offerId}_${cur}_priceSwap`))?.value.split('_');
+    el.price = [price[1], Number(price[2])];
+    return el;
+}
+
+function getUserOffers(data, address) {
+    const respJSON = data;
+    const filtered = respJSON.filter((el) => {
+        return el.key.endsWith('ownerSwap') && el.value === address;
+    });
+    const ids = [];
+    for (const el of filtered) {
+        const id = el.key.split('_')[1];
+        ids.push(id)
+    }
+
+    const userOffers = [];
+    for (const id of ids) {
+        const o = parseOfferData(id, 'WAVES', respJSON); // TODO: changeable (regex)
+        userOffers.push(o);
+    }
+    return userOffers;
+}
+
 async function getAssetName(assetId) {
     const resp =  await fetch(`${window.nodeURL}/assets/details/${assetId}`);
     const data = await resp.json(); 
     return data.name;
 }
+
 export {
     getData,
-    getAssetName
+    getAssets,
+    getAssetName,
+    getUserOffers
 }

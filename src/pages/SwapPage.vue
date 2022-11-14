@@ -9,7 +9,10 @@ import {
 import { useMainStore } from '../stores/main';
 import { useSwapStore } from '../stores/swap.js';
 import * as sorting from '../helpers/sort.js';
-import { getData } from '../helpers/market';
+import {
+    getData,
+    getAssets
+} from '../helpers/market';
 import { getLogin } from '../helpers/wallet';
 
 import NftCard from '../components/swap/NftCard.vue';
@@ -46,7 +49,8 @@ onBeforeMount(() => {
 });
 
 onMounted(async () => {
-    const data = await getData();
+    const rawData = await getData();
+    const data = getAssets(rawData);
     const sorted = sorting.sortLowestPrice(data);
     items.value = sorted;
 });

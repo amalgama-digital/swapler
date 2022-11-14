@@ -2,7 +2,12 @@
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { getData, getAssetName } from '../../helpers/market';
+import {
+    getData,
+    getAssets,
+    getAssetName,
+    getUserOffers
+} from '../../helpers/market';
 import { swapCancel } from '../../helpers/wallet';
 
 import { useManageStore } from '../../stores/manage';
@@ -24,19 +29,15 @@ const show = reactive({
 }); 
 
 onMounted(async () => {
-    const data = await getData();
+    const rawData = await getData();
+    const data = getAssets(rawData);
     const userLots = data.filter(e => e.owner === mainStore.walletAddr);
     items.value = userLots;
-    const userOffers = [];
-    for (const v of data) {
-        const x = v.offers.filter(el => el.owner === mainStore.walletAddr);
-        // item.offerId is a user asset id, which he want to swap
-        for (const item of x) {
-            item ? item.wantAssetId = v.offerId: false;
-            item ? item.wantAssetName = await getAssetName(v.offerId): false;
-            item ? item.offerName = await getAssetName(item.offerId): false;
-            item ? offers.value.push(item) : false;
-        }
+    const o = getUserOffers(rawData, mainStore.walletAddr);
+    for (const offer of o) {
+        offer.offerName = await getAssetName(offer.offerId);
+        offer.wantAssetName = await getAssetName(offer.wantAssetId);
+        offers.value.push(offer);
     }
 });
 

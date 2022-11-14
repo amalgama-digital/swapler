@@ -1,4 +1,4 @@
-async function getMetadata(description) {    
+function getMetadata(description) {    
     var resp = {};
     try {
         resp = JSON.parse(description);
