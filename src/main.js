@@ -7,11 +7,11 @@ import App from './App.vue';
 import './assets/main.css';
 import router from './router';
 
-//testnet
-const nodeURL = 'https://nodes-testnet.wavesnodes.com';
+// testnet
+// const nodeURL = 'https://nodes-testnet.wavesnodes.com';
 
 // mainnet
-// const nodeURL = 'https://nodes.wavesnodes.com'
+const nodeURL = 'https://nodes.wavesnodes.com'
 window.nodeURL = nodeURL;
 
 window.signer = new Signer({
@@ -19,10 +19,10 @@ window.signer = new Signer({
 });
 
 // testnet
-window.contractAddress = '3N8VMRDjjw6kAuCviYwFq4yDWyctRuHPN7X';
+// window.contractAddress = '3N8VMRDjjw6kAuCviYwFq4yDWyctRuHPN7X';
 
 // mainnet
-// window.contractAddress = ""
+window.contractAddress = "3P94x3zugyYPax5CBd8g6SSou5gJQ28PsmX";
 
 const app = createApp(App);
 
