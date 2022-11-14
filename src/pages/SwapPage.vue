@@ -28,20 +28,6 @@ const sortBy = reactive([
 
 const items = ref(undefined);
 
-onBeforeMount(() => {
-    if (mainStore.walletConn) {
-        return;
-    }
-    const login = getLogin();
-    if (login) {
-        mainStore.walletAddr = login.address;
-        mainStore.walletPubKey = login.publicKey;
-        mainStore.walletConn = true;
-    } else {
-        router.push({ name: 'main' });
-    }
-});
-
 onMounted(async () => {
     const rawData = await getData();
     const data = getAssets(rawData);
@@ -57,7 +43,6 @@ function closePopup() {
 }
 
 function sort(k) {
-    console.debug({ k });
     switch (k) {
         case sortBy[0]:
             items.value = sorting.sortLowestPrice(items.value);

@@ -53,7 +53,6 @@ function manage(item) {
     router.push({ name: 'manage-asset' });
 }
 async function revokeOffer(off) {
-    console.debug({ off });
     const id = `Swap_${off.offerId}_WAVES`;
     const result = await swapCancel(id);
     if (result.error) {
