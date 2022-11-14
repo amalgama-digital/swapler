@@ -25,12 +25,10 @@ onMounted(async () => {
     <div class="flex-column flex-center user-token-container h-100 w-100">
         <div class="flex-column tokens-container w-80">
             <span class="user-heading">My tokens:</span>
-            <table class="w-100">
-                <tr>
-                    <td>waves</td>
-                    <td>{{ balance }}</td>
-                </tr>
-            </table>
+            <div class="flex-row flex-space-between balance">
+                <span>waves</span>
+                <span>{{ balance }}</span>
+            </div>
             <div class="flex-row input-container">
                 <span>waves</span>
                 <span class="divider"></span>
@@ -60,22 +58,12 @@ onMounted(async () => {
     font-size: 18px;
     font-weight: 400;
 }
-table {
-    border-spacing: 0;
-    max-width: 30rem;
-}
-tr td {
-    padding: 5px;
+.balance {
     border: 2px solid var(--color-green);
-}
-tr td:first-child {
-    border-radius: 10px 0 0 10px;
-    border-right: none;
-}
-tr td:last-child {
-    border-radius: 0 10px 10px 0;
-    border-left: none;
-    text-align: end;
+    border-radius: 10px;
+    padding: 5px;
+    max-width: 30rem;
+
 }
 input {
     background: none;

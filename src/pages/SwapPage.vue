@@ -30,7 +30,6 @@ const items = ref(undefined);
 
 onMounted(async () => {
     const rawData = await getData();
-    console.debug({rawData});
     const data = await getAssets(rawData);
     const sorted = sorting.sortLowestPrice(data);
     items.value = sorted;

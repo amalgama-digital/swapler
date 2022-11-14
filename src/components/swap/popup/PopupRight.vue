@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useMainStore } from '../../../stores/main';
 import { useSwapStore } from '../../../stores/swap';
 import * as wallet from '../../../helpers/wallet';
 
@@ -10,6 +11,7 @@ import { routerKey } from 'vue-router';
 const props = defineProps(['item']);
 const router = useRouter();
 
+const mainStore = useMainStore();
 const swapStore = useSwapStore();
 
 const offering = computed(() => {
@@ -115,7 +117,7 @@ async function instantBuy() {
                 </ul>
             </div>
             <div class="flex-row offer-btn-container">
-                <basic-button @click="instantBuy">Instant buy</basic-button>
+                <basic-button :disabled="!mainStore.walletConn" @click="instantBuy">Instant buy</basic-button>
                 <basic-button @click="sendOffer" :disabled="!offering"
                     >Send an offer</basic-button
                 >
