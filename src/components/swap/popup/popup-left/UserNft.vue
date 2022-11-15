@@ -11,20 +11,29 @@ const emit = defineEmits(['setComponent']);
 const swapStore = useSwapStore();
 const mainStore = useMainStore();
 const selectedToken = ref(undefined);
+const showError = ref(false);
 
 const userNFTs = reactive([]);
 
 onMounted(async () => {
     const addr = mainStore.walletAddr;
     await getNFTs(addr, userNFTs);
+
+    if (swapStore.nftsToSwap.length !== 0) {
+        showError.value = true;
+    }
 });
 
 function selectToken(nft) {
     selectedToken.value = nft;
 }
 function addToOffer() {
-    swapStore.nftsToSwap.push(selectedToken.value);
-    emit('setComponent', 'offer');
+    if (swapStore.nftsToSwap.length !== 0) {
+        showError.value = true;
+    } else {
+        swapStore.nftsToSwap.push(selectedToken.value);
+        emit('setComponent', 'offer');
+    }
 }
 </script>
 
@@ -64,13 +73,16 @@ function addToOffer() {
                     </div>
                 </div>
             </div>
+            <div v-if="showError">
+                <span class="error">At this moment only one NFT is allowed in the offer</span>
+            </div>
         </div>
         <div class="flex-row btn-container">
             <button class="cancel-btn" @click="emit('setComponent', 'main')">
                 Cancel
             </button>
             <basic-button
-                :disabled="selectedToken ? false : true"
+                :disabled="selectedToken !== undefined && showError"
                 @click="addToOffer"
             >
                 Add to offer
