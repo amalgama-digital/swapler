@@ -7,6 +7,7 @@ const emit = defineEmits(['setComponent']);
 const swapStore = useSwapStore();
 const balance = ref(0);
 const swapAmount = ref(null);
+const insufficientFunds = ref(false);
 
 function goToOffer() {
     swapStore.tokensToSwap = swapAmount.value;
@@ -18,6 +19,10 @@ onMounted(async () => {
     const bal =
         balanceResponse[0]?.amount / Math.pow(10, balanceResponse[0]?.decimals);
     balance.value = bal;
+    // TODO: don't hardcode commission
+    if (bal < 0.5) {
+        insufficientFunds.value = true;
+    }
 });
 </script>
 
@@ -34,17 +39,27 @@ onMounted(async () => {
                 <span class="divider"></span>
                 <input
                     v-model="swapAmount"
+                    :disabled="insufficientFunds"
                     type="text"
                     placeholder="Enter the amount"
                 />
             </div>
+            <div v-if="insufficientFunds" class="flex-row flex-start flex-center gap-05">
+                <img src="/img/svg/alert.svg" width="30" alt="">
+                <span class="error">
+                    Insufficient funds
+                </span>
+            </div>
         </div>
         <div class="flex-row btn-container">
-            <button class="cancel-btn" @click="emit('setComponent', 'main')">
+            <button
+                class="cancel-btn"
+                @click="emit('setComponent', 'main')"
+            >
                 Cancel
             </button>
             <basic-button
-                :disabled="swapAmount > 0 ? false : true"
+                :disabled="(swapAmount <= 0 || insufficientFunds)"
                 @click="goToOffer"
             >
                 Add to offer

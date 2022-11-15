@@ -31,6 +31,12 @@ button {
     opacity: 0.2;
 }
 
+.error {
+    color: rgb(240, 50, 50);
+    font-family: 'Comfortaa';
+    font-weight: 700;
+}
+
 .flex-row {
     display: flex;
     flex-direction: row;
@@ -64,6 +70,10 @@ button {
 
 .gap-07 {
     gap: 0.7rem;
+}
+
+.gap-1 {
+    gap: 1rem;
 }
 
 .font-comfortaa-700 {
