@@ -5,6 +5,7 @@ import SwapPage from '../pages/SwapPage.vue';
 import UserPage from '../pages/UserPage.vue';
 import LotPage from '../pages/LotPage.vue';
 import ManagePage from '../pages/ManagePage.vue';
+import ErrorPage from '../pages/ErrorPage.vue';
 
 const routes = [
     {
@@ -32,6 +33,11 @@ const routes = [
         name: 'add-lot',
         component: LotPage,
     },
+    {
+        path: '/error',
+        name: 'error',
+        component: ErrorPage
+    }
 ];
 
 const router = createRouter({

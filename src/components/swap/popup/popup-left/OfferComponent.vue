@@ -83,7 +83,7 @@ function removeNft(n) {
         <div class="flex-column w-100 gap-05">
             <span class="gray-sm">Network commission</span>
             <div class="flex-row gap-07">
-                <span>0.5</span>
+                <span>0.509</span>
                 <span>WAVES</span>
             </div>
         </div>

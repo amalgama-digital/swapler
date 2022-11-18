@@ -39,6 +39,9 @@ async function sendOffer() {
     );
     if (result.error) {
         console.error(result.error);
+        mainStore.error.cause = 'sendOffer',
+        mainStore.error.message = "Can't send offer. Please ensure that You have enough funds.";
+        router.push({name: 'error'});
     } else {
         console.log(result.response);
         setTimeout(() => {
@@ -57,6 +60,10 @@ async function instantBuy() {
     const result = await wallet.buy(props.item.offerId, payment);
     if (result.error) {
         console.error(result.error);
+
+        mainStore.error.cause = 'instantBuy',
+        mainStore.error.message = result.error.message;
+        router.push({name: 'error'});
     } else {
         console.log(result.response);
         setTimeout(() => {

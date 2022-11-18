@@ -2,12 +2,14 @@
 import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import * as wallet from '../../../helpers/wallet';
+import { useMainStore } from '../../../stores/main';
 
 import BasicButton from '../../BasicButton.vue';
 import PopupComponent from '../../PopupComponent.vue';
 
 const emit = defineEmits(['addlot', 'cancel']);
 const props = defineProps(['selectedToken']);
+const mainStore = useMainStore();
 
 const router = useRouter();
 const showPopup = ref(false);
@@ -74,8 +76,10 @@ async function addLot() {
         wantPrice
     );
     if (result.error) {
-        // TODO:
         console.error(result.error);
+        mainStore.error.cause = 'instantBuy',
+        mainStore.error.message = result.error.message;
+        router.push({name: 'error'});
     } else {
         setTimeout(() => {
             router.push({ name: 'swap' });

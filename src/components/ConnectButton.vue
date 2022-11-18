@@ -1,8 +1,11 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
 import { connectKeeper } from '../helpers/wallet';
 import { useMainStore } from '../stores/main';
 
 const mainStore = useMainStore();
+const router = useRouter();
 
 async function connectWallet() {
     const conn = await connectKeeper();
@@ -13,6 +16,11 @@ async function connectWallet() {
         mainStore.walletConn = true;
     } else {
         console.error(conn.error);
+        mainStore.error.cause = 'Wallet';
+        if (conn.error.message?.includes('is not installed')) {
+            mainStore.error.message = "WavesKeeper is not installed.";
+        }
+        router.push({name: 'error'});
     }
 }
 </script>
