@@ -4,9 +4,9 @@ import { useRouter } from 'vue-router';
 import { useMainStore } from '../../../stores/main';
 import { useSwapStore } from '../../../stores/swap';
 import * as wallet from '../../../helpers/wallet';
+import { pluralize } from '../../../helpers'
 
 import BasicButton from '../../BasicButton.vue';
-import { routerKey } from 'vue-router';
 
 const props = defineProps(['item']);
 const router = useRouter();
@@ -67,7 +67,7 @@ async function instantBuy() {
     } else {
         console.log(result.response);
         setTimeout(() => {
-            routerKey.push({ name: 'profile' });
+            router.push({ name: 'profile' });
         }, 3000);
     }
 }
@@ -110,7 +110,7 @@ async function instantBuy() {
                         </span>
                     </div>
                     <span class="offers-count">
-                        {{ props.item.offers?.length || 0 }} offers
+                        {{ props.item.offers?.length || 0 }} {{ pluralize('offer', props.item.offers?.length) }}
                     </span>
                 </div>
             </div>

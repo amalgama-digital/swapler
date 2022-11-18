@@ -1,4 +1,6 @@
 <script setup>
+import { pluralize } from '../../../helpers';
+
 const props = defineProps(['cost', 'offers']);
 </script>
 
@@ -11,7 +13,7 @@ const props = defineProps(['cost', 'offers']);
                     >{{ props.cost }} <img src="/img/svg/rectangle.svg" alt=""
                 /></span>
             </div>
-            <span class="offers-count">{{ props.offers }} offers</span>
+            <span class="offers-count">{{ props.offers }} {{ pluralize('offer', props.offers) }}</span>
         </div>
         <slot></slot>
     </div>
