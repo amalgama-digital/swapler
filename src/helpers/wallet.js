@@ -1,4 +1,5 @@
 import { ProviderKeeper } from '@waves/provider-keeper';
+import { createDuckURL } from './ducks';
 
 import { getMetadata, urlByIssuer } from './metadata';
 
@@ -52,13 +53,17 @@ async function getNFTs(address, userNFTs) {
             data.assetId = elem.assetId;
             data.issuer = elem.issuer;
 
-            const metadata = await getMetadata(elem.description);
+            const metadata = getMetadata(elem.description);
             data.metadata = metadata;
 
             data.metadata.url =
                 data.metadata.url ??
                 (await urlByIssuer(data.issuer, data.assetId));
             data.metadata.id = Number(data.name.replace('#', '').split(' ')[1]);
+
+            data.metadata.url = 
+                data.metadata.url ??
+                createDuckURL(data.name, data.assetId);
 
             data.price = 0;
 

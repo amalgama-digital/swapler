@@ -1,4 +1,5 @@
 import { getMetadata, urlByIssuer } from './metadata';
+import { createDuckURL } from './ducks'
 
 function parseData(offerId, data) {
     const el = {};
@@ -96,15 +97,22 @@ async function getAssets(data) {
     const offerIDs = getUniqueOfferIDs(idData);
     for (const offerId of offerIDs) {
         const item = parseData(offerId, respJSON);
-        if (!item.metadata.url) {
-            item.metadata.url = await urlByIssuer(item.issuer, offerId);
-        }
+
         if (item.owner) {
+            item.metadata.url =
+                item.metadata.url ??
+                (await urlByIssuer(item.issuer, offerId));
+
+            item.metadata.url = 
+                item.metadata.url ??
+                createDuckURL(item.name, offerId);
+
             const offers = getAssetOffers(offerId, respJSON);
             item.offers = offers;
             items.push(item);
         }
     }
+    console.debug({items});
     return items;
 }
 

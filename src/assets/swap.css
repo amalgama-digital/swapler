@@ -12,10 +12,8 @@
     border: 2px solid #fff;
     border-radius: 14px;
 
-    max-width: 250px;
-    max-height: 250px;
-    width: auto;
-    height: auto;
+    width: 250px;
+    height: 250px;
 }
 .item-name {
     font-size: 14px;

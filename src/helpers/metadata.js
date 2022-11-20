@@ -1,3 +1,5 @@
+import { getPuzzleImage } from "./puzzle";
+
 function getMetadata(description) {
     var resp = {};
     try {
@@ -19,6 +21,12 @@ function getMetadata(description) {
  */
 async function urlByIssuer(issuer, assetId) {
     try {
+        // Puzzle
+        if (issuer === '3PFQjjDMiZKQZdu5JqTHD7HwgSXyp9Rw9By') {
+            const url = await getPuzzleImage(assetId);
+            return url;
+        }
+
         const loc = `${window.nodeURL}/addresses/data/${issuer}`;
         const reqData = {
             keys: [`${assetId}_url`],
@@ -31,7 +39,9 @@ async function urlByIssuer(issuer, assetId) {
             body: JSON.stringify(reqData),
         });
         const res = await response.json();
-        return res[0]?.value;
+        let url =  res[0]?.value;
+
+        return url
     } catch (error) {
         console.error('url_by_issuer', error);
     }

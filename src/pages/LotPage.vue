@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../stores/main';
 
-import { getMetadata, urlByIssuer } from '../helpers/metadata';
+import { getNFTs } from '../helpers/wallet';
 
 import SelectLots from '../components/user/lots/SelectLots.vue';
 import AddLot from '../components/user/lots/AddLot.vue';
@@ -40,33 +40,6 @@ function selectToken(nft) {
 function unsetToken() {
     selectedToken.value = undefined;
     selectedComponent.value = 'select';
-}
-async function getNFTs(address, userNFTs) {
-    const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
-    try {
-        const resp = await fetch(url);
-        const respData = await resp.json();
-        for (const elem of respData) {
-            const data = {};
-            data.name = elem.name;
-            data.assetId = elem.assetId;
-            data.issuer = elem.issuer;
-
-            const metadata = await getMetadata(elem.description);
-            data.metadata = metadata;
-
-            data.metadata.url =
-                data.metadata.url ??
-                (await urlByIssuer(data.issuer, data.assetId));
-            data.metadata.id = Number(data.name.replace('#', '').split(' ')[1]);
-
-            data.price = 0;
-
-            userNFTs.push(data);
-        }
-    } catch (error) {
-        console.error(error);
-    }
 }
 </script>
 
