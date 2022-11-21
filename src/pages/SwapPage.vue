@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { onBeforeMount, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useMainStore } from '../stores/main';
@@ -28,11 +28,27 @@ const sortBy = reactive([
 
 const items = ref(undefined);
 
+onBeforeMount(() => {
+    if (mainStore.walletConn) {
+        return;
+    }
+    const login = getLogin();
+    if (login) {
+        mainStore.walletAddr = login.address;
+        mainStore.walletPubKey = login.publicKey;
+        mainStore.walletConn = true;
+    }
+});
+
 onMounted(async () => {
     const rawData = await getData();
     const data = await getAssets(rawData);
     const sorted = sorting.sortLowestPrice(data);
     items.value = sorted;
+});
+
+onUnmounted(() => {
+    closePopup();
 });
 
 function closePopup() {
