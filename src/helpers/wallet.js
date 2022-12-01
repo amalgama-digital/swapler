@@ -44,10 +44,10 @@ async function logout() {
  */
 async function getNFTs(address, userNFTs) {
     const url = `${window.nodeURL}/assets/nft/${address}/limit/1000`;
-    try {
-        const resp = await fetch(url);
-        const respData = await resp.json();
-        for (const elem of respData) {
+    const resp = await fetch(url);
+    const respData = await resp.json();
+    for (const elem of respData) {
+        try {
             const data = {};
             data.name = elem.name;
             data.assetId = elem.assetId;
@@ -68,9 +68,9 @@ async function getNFTs(address, userNFTs) {
             data.price = 0;
 
             userNFTs.push(data);
+        } catch (error) {
+            console.error(error);
         }
-    } catch (error) {
-        console.error(error);
     }
 }
 /**
