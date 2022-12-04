@@ -112,7 +112,6 @@ async function getAssets(data) {
             items.push(item);
         }
     }
-    console.debug({items});
     return items;
 }
 

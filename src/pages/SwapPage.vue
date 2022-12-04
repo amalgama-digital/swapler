@@ -90,13 +90,15 @@ function showPopupWithItem(item) {
             </div>
         </div>
         <!-- NftCards -->
-        <div class="flex-row flex-start w-80 cards">
-            <NftCard v-for="item in items" :key="item.n" :item="item">
-                <button @click="showPopupWithItem(item)" class="button offer-btn">
-                    Quick Offer
-                </button>
-            </NftCard>
-        </div>
+        <!-- <div class="flex-row flex-start w-80 cards"> -->
+            <transition-group class="flex-row flex-start w-80 cards" name="ncard" tag="div">
+                <NftCard v-for="item in items" :key="item.offerId" :item="item">
+                    <button @click="showPopupWithItem(item)" class="button offer-btn">
+                        Quick Offer
+                    </button>
+                </NftCard>
+            </transition-group>
+        <!-- </div> -->
         <popup-component :popup-show="swapStore.showPopup">
             <img
                 @click="closePopup"
@@ -114,6 +116,19 @@ function showPopupWithItem(item) {
 </template>
 
 <style scoped>
+.ncard-move,
+.ncard-enter-active,
+.ncard-leave-active {
+    transition: all 0.5s ease;
+}
+.ncard-enter-from,
+.ncard-leave-to {
+    opacity: 0;
+    transform: translateY(10rem);
+}
+.ncard-leave-active {
+    position: absolute;
+}
 .swap-container {
     margin-top: 0.7rem;
 }
