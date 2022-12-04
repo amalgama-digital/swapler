@@ -92,7 +92,7 @@ function showPopupWithItem(item) {
         <!-- NftCards -->
         <div class="flex-row flex-start w-80 cards">
             <NftCard v-for="item in items" :key="item.n" :item="item">
-                <button @click="showPopupWithItem(item)" class="offer-btn">
+                <button @click="showPopupWithItem(item)" class="button offer-btn">
                     Quick Offer
                 </button>
             </NftCard>
@@ -149,10 +149,7 @@ function showPopupWithItem(item) {
 }
 .offer-btn {
     font-size: 16px;
-    color: var(--color-green);
-    border: 2px solid var(--color-green);
-    border-radius: 14px;
-    background-color: inherit;
+    border-radius: 0.8rem;
     min-width: 8rem;
     cursor: pointer;
 }

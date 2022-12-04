@@ -24,6 +24,8 @@ button {
 
     background-color: inherit;
     cursor: pointer;
+
+    transition: all 0.5s ease-in;
 }
 
 .button:disabled {
@@ -31,10 +33,31 @@ button {
     opacity: 0.2;
 }
 
+.button:disabled:hover {
+    background-color: inherit;
+    color: var(--color-green);
+    animation-name: shakeX;
+    animation-duration: 1s;
+    border-color: red;
+    color: red;
+}
+
+.button:hover {
+    background-color: var(--color-green);
+    color: var(--color-dark-gray);
+}
+
 .error {
     color: rgb(240, 50, 50);
     font-family: 'Comfortaa';
     font-weight: 700;
+}
+
+.error-container {
+    width: 90%;
+    display: block;
+    overflow: hidden;
+    height: 100%;
 }
 
 .flex-row {

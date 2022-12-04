@@ -1,5 +1,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
+import "animate.css";
+
 import { useSwapStore } from '../../../../stores/swap';
 import { useMainStore } from '../../../../stores/main';
 
@@ -73,8 +75,11 @@ function addToOffer() {
                     </div>
                 </div>
             </div>
-            <div v-if="showError">
-                <span class="error">At this moment only one NFT is allowed in the offer</span>
+            <div v-if="showError" class="error-container">
+                <div class="animate__animated animate__slideInRight flex-row flex-start flex-center gap-05">
+                    <img src="/img/svg/alert.svg" width="30" alt="">
+                    <span class="error">At this moment only one NFT is allowed in the offer</span>
+                </div>
             </div>
         </div>
         <div class="flex-row btn-container">
@@ -92,6 +97,9 @@ function addToOffer() {
 </template>
 
 <style scoped>
+.animate__slideInRight {
+    --animate-duration: 0.3s;
+}
 .user-token-container {
     justify-content: space-between;
 }

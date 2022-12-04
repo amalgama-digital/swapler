@@ -1,4 +1,5 @@
 <script setup>
+import 'animate.css';
 import { useMainStore } from '../stores/main';
 
 const mainStore = useMainStore();
@@ -7,7 +8,9 @@ const mainStore = useMainStore();
 <template>
     <div class="flex-column flex-center w-100">
         <div class="flex-column flex-center w-80 error-container">
-            <h1 class="flex-row flex-center w-100 heading">Oh no <img height="64" src="/img/svg/alert.svg" alt="!"></h1>
+            <h1 
+                class="animate__animated animate__pulse animate__repeat-3 flex-row flex-center w-100 heading"
+            >Oh no <img height="64" src="/img/svg/alert.svg" alt="!"></h1>
             <span class="error-text" v-if="mainStore.error.message">{{ mainStore.error.message }}</span>
             <span class="error-text" v-else>
                 Something went wrong! Please, be sure that You connected to the main network and You have enough funds on your wallet.

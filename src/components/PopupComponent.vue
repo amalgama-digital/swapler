@@ -20,11 +20,13 @@ watch(
 </script>
 
 <template>
-    <div :class="['popup', popupClass]">
-        <div class="popup__content">
-            <slot></slot>
+    <Transition name="popup">
+        <div v-if="popupShow" class="popup">
+            <div class="popup__content">
+                <slot></slot>
+            </div>
         </div>
-    </div>
+    </Transition>
 </template>
 
 <style scoped>
@@ -33,6 +35,14 @@ watch(
         height: 100vh !important;
         width: 100vw !important;
     }
+}
+.popup-enter-active,
+.popup-leave-active {
+    transition: opacity 0.3s ease-in;
+}
+.popup-enter-from,
+.popup-leave-to {
+    opacity: 0;
 }
 .popup {
     display: flex;
@@ -60,11 +70,5 @@ watch(
 
     background-color: #242424;
     border-radius: 20px;
-}
-.popup-show {
-    visibility: visible;
-}
-.popup-hide {
-    visibility: hidden;
 }
 </style>

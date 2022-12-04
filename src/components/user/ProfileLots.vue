@@ -69,7 +69,7 @@ async function revokeOffer(off) {
     <div class="flex-column w-80 lots-container">
         <div class="flex-row flex-space-between">
             <span class="text">My lots:</span>
-            <span @click="goToAddLot" class="add-lot"
+            <span @click="goToAddLot" class="flex-row flex-center gap-05 add-lot"
                 ><img src="/img/svg/add_circle.svg" /> Add new lot</span
             >
         </div>

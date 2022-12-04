@@ -44,11 +44,18 @@ onMounted(async () => {
                     placeholder="Enter the amount"
                 />
             </div>
-            <div v-if="insufficientFunds" class="flex-row flex-start flex-center gap-05">
-                <img src="/img/svg/alert.svg" width="30" alt="">
-                <span class="error">
-                    Insufficient funds
-                </span>
+            <div
+                v-if="insufficientFunds"
+                class="error-container"
+            >
+                <div 
+                    class="animate__animated animate__slideInRight flex-row flex-start flex-center gap-05"
+                >
+                    <img src="/img/svg/alert.svg" width="30" alt="">
+                    <span class="error">
+                        Insufficient funds
+                    </span>
+                </div>
             </div>
         </div>
         <div class="flex-row btn-container">
@@ -69,6 +76,9 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.animate__slideInRight {
+    --animate-duration: 0.3s;
+}
 .user-heading {
     font-size: 18px;
     font-weight: 400;
