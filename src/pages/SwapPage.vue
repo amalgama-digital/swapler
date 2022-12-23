@@ -13,6 +13,7 @@ import PopupComponent from '../components/PopupComponent.vue';
 import PopupLeft from '../components/swap/popup/PopupLeft.vue';
 import PopupRight from '../components/swap/popup/PopupRight.vue';
 import CustomSelectComponent from '../components/CustomSelectComponent.vue';
+import UpArrow from '../components/UpArrow.vue';
 
 const router = useRouter();
 const mainStore = useMainStore();
@@ -78,6 +79,7 @@ function showPopupWithItem(item) {
 
 <template>
     <div class="flex-column flex-center swap-container">
+        <UpArrow />
         <!-- ManipulationElements -->
         <div class="flex-row flex-space-between w-80">
             <div class="flex-row flex-center sort-container">
